@@ -27,7 +27,6 @@ const isActive = (path: string) =>
   </div>
 
   <div class="sidebar-footer">
-    <!-- RSS -->
     <div class="rss-wrap">
       <button class="rss-btn" id="rss-copy" data-url={RSS_URL}>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
@@ -37,27 +36,7 @@ const isActive = (path: string) =>
         </svg>
         <span id="rss-label">RSS</span>
       </button>
-      <div class="rss-tooltip">{RSS_URL}</div>
-    </div>
-
-    <!-- Email subscribe -->
-    <div class="subscribe">
-      <span class="subscribe-label">Newsletter</span>
-      <form
-        class="subscribe-form"
-        action={`https://buttondown.email/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`}
-        method="post"
-        target="_blank"
-      >
-        <input
-          class="subscribe-input"
-          type="email"
-          name="email"
-          placeholder="seu@email.com"
-          required
-        />
-        <button class="subscribe-btn" type="submit">Inscrever →</button>
-      </form>
+      <div class="rss-tooltip">Copiar link do feed</div>
     </div>
   </div>
 </aside>
