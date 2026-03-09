@@ -1,54 +1,49 @@
-/* ── Flexoki palette ─────────────────────────────────────────────── */
-:root {
-  --paper:   #fffcf0;
-  --base:    #100f0f;
-  --tx:      #100f0f;
-  --tx-2:    #6f6e69;
-  --tx-3:    #b7b5ac;
-  --ui:      #e6e4d9;
-  --ui-2:    #dad8ce;
-  --ui-3:    #cecdc3;
-  --bg:      #fffcf0;
-  --bg-2:    #f2f0e5;
+/* ── Selenized — light (6h–18h) ──────────────────────────────────── */
+[data-theme="light"] {
+  --bg:      #fbf3db;
+  --bg-2:    #ece3cc;
+  --ui:      #d5cdb6;
+  --ui-2:    #c4bba8;
+  --ui-3:    #909995;
+  --tx:      #184956;
+  --tx-2:    #3a4d53;
+  --tx-3:    #909995;
 
-  --red:     #af3029;
-  --orange:  #bc5215;
-  --yellow:  #ad8301;
-  --green:   #66800b;
-  --cyan:    #24837b;
-  --blue:    #205ea6;
-  --purple:  #5e409d;
-  --magenta: #a02f6f;
+  --red:     #d2212d;
+  --orange:  #c25d1e;
+  --yellow:  #ad8900;
+  --green:   #489100;
+  --cyan:    #00978a;
+  --blue:    #0072d4;
+  --purple:  #7762d7;
+  --magenta: #ca4898;
 
   --accent:  var(--blue);
   --link:    var(--blue);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper:  #100f0f;
-    --base:   #fffcf0;
-    --tx:     #cecdc3;
-    --tx-2:   #878580;
-    --tx-3:   #575653;
-    --ui:     #1c1b1a;
-    --ui-2:   #282726;
-    --ui-3:   #343331;
-    --bg:     #100f0f;
-    --bg-2:   #1c1b1a;
+/* ── Selenized — dark (18h–6h) ───────────────────────────────────── */
+[data-theme="dark"] {
+  --bg:      #103c48;
+  --bg-2:    #184956;
+  --ui:      #2d5b69;
+  --ui-2:    #3a6a7a;
+  --ui-3:    #72898f;
+  --tx:      #cad8d9;
+  --tx-2:    #adbcbc;
+  --tx-3:    #72898f;
 
-    --red:    #d14d41;
-    --orange: #da702c;
-    --yellow: #d0a215;
-    --green:  #879a39;
-    --cyan:   #3aa99f;
-    --blue:   #4385be;
-    --purple: #8b7ec8;
-    --magenta:#ce5d97;
+  --red:     #fa5750;
+  --orange:  #ed8649;
+  --yellow:  #dbb32d;
+  --green:   #70b433;
+  --cyan:    #25a8a8;
+  --blue:    #4695f7;
+  --purple:  #af88eb;
+  --magenta: #f275be;
 
-    --accent: var(--blue);
-    --link:   var(--blue);
-  }
+  --accent:  var(--blue);
+  --link:    var(--blue);
 }
 
 /* ── Reset e base ────────────────────────────────────────────────── */
@@ -65,6 +60,7 @@ body {
   font-family: 'Georgia', 'Times New Roman', serif;
   line-height: 1.7;
   min-height: 100vh;
+  transition: background 0.2s, color 0.2s;
 }
 
 /* ── Layout principal ────────────────────────────────────────────── */
@@ -143,6 +139,111 @@ body {
 
 .sidebar-tags a:hover { color: var(--accent); }
 
+/* ── RSS button ──────────────────────────────────────────────────── */
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rss-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.rss-btn {
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: var(--tx-3);
+  background: none;
+  border: 1px solid var(--ui);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.rss-btn:hover { color: var(--orange); border-color: var(--orange); }
+.rss-btn.copied { color: var(--green); border-color: var(--green); }
+
+.rss-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  background: var(--bg-2);
+  border: 1px solid var(--ui-2);
+  border-radius: 4px;
+  padding: 0.35rem 0.6rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  color: var(--tx-2);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.15s;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--bg) 0%, transparent 20%);
+}
+
+.rss-wrap:hover .rss-tooltip { opacity: 1; transform: translateY(0); }
+
+/* ── Email subscribe ─────────────────────────────────────────────── */
+.subscribe {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.subscribe-label {
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  color: var(--tx-3);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.subscribe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.subscribe-input {
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: var(--tx);
+  background: var(--bg-2);
+  border: 1px solid var(--ui);
+  border-radius: 4px;
+  padding: 0.35rem 0.6rem;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+
+.subscribe-input::placeholder { color: var(--tx-3); }
+.subscribe-input:focus { border-color: var(--ui-3); }
+
+.subscribe-btn {
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: var(--tx-2);
+  background: none;
+  border: 1px solid var(--ui);
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  text-align: center;
+}
+
+.subscribe-btn:hover { color: var(--tx); border-color: var(--ui-3); }
+
 /* ── Conteúdo principal ──────────────────────────────────────────── */
 .main {
   flex: 1;
@@ -205,6 +306,7 @@ hr { border: none; border-top: 1px solid var(--ui); margin: 2rem 0; }
   margin-bottom: 0.3rem;
   display: flex;
   gap: 0.75rem;
+  align-items: center;
 }
 
 .post-title {
@@ -234,6 +336,7 @@ hr { border: none; border-top: 1px solid var(--ui); margin: 2rem 0; }
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .tag {
@@ -259,8 +362,8 @@ hr { border: none; border-top: 1px solid var(--ui); margin: 2rem 0; }
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-.status-lido     { background: color-mix(in srgb, var(--green) 15%, var(--bg)); color: var(--green); }
-.status-lendo    { background: color-mix(in srgb, var(--blue) 15%, var(--bg));  color: var(--blue); }
+.status-lido      { background: color-mix(in srgb, var(--green) 15%, var(--bg)); color: var(--green); }
+.status-lendo     { background: color-mix(in srgb, var(--blue) 15%, var(--bg));  color: var(--blue); }
 .status-quero-ler { background: var(--bg-2); color: var(--tx-3); }
 
 /* ── Giscus ──────────────────────────────────────────────────────── */
@@ -293,6 +396,6 @@ hr { border: none; border-top: 1px solid var(--ui); margin: 2rem 0; }
     border-bottom: 1px solid var(--ui);
     gap: 1rem;
   }
-  .sidebar-tags { display: none; }
+  .sidebar-tags, .sidebar-footer { display: none; }
   .main { padding: 1.5rem 1.25rem; }
 }

@@ -1,4 +1,9 @@
 ---
+// Para ativar o email subscribe, crie uma conta no Buttondown (buttondown.email)
+// e substitua 'seu-usuario' pelo seu username.
+const BUTTONDOWN_USERNAME = 'seu-usuario';
+const RSS_URL = `${Astro.site ?? 'https://amphora-site.vercel.app'}rss.xml`;
+
 const currentPath = Astro.url.pathname;
 const isActive = (path: string) =>
   currentPath === path || currentPath.startsWith(path + '/');
@@ -20,4 +25,59 @@ const isActive = (path: string) =>
     <a href="/tags/livros">#livros</a>
     <a href="/tags/tecnologia">#tecnologia</a>
   </div>
+
+  <div class="sidebar-footer">
+    <!-- RSS -->
+    <div class="rss-wrap">
+      <button class="rss-btn" id="rss-copy" data-url={RSS_URL}>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="5" cy="19" r="3"/>
+          <path d="M4 4a16 16 0 0 1 16 16h-3A13 13 0 0 0 4 7V4z"/>
+          <path d="M4 11a9 9 0 0 1 9 9H10a6 6 0 0 0-6-6v-3z"/>
+        </svg>
+        <span id="rss-label">RSS</span>
+      </button>
+      <div class="rss-tooltip">{RSS_URL}</div>
+    </div>
+
+    <!-- Email subscribe -->
+    <div class="subscribe">
+      <span class="subscribe-label">Newsletter</span>
+      <form
+        class="subscribe-form"
+        action={`https://buttondown.email/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`}
+        method="post"
+        target="_blank"
+      >
+        <input
+          class="subscribe-input"
+          type="email"
+          name="email"
+          placeholder="seu@email.com"
+          required
+        />
+        <button class="subscribe-btn" type="submit">Inscrever →</button>
+      </form>
+    </div>
+  </div>
 </aside>
+
+<script>
+  const btn = document.getElementById('rss-copy') as HTMLButtonElement;
+  const label = document.getElementById('rss-label');
+
+  btn?.addEventListener('click', async () => {
+    const url = btn.dataset.url ?? '';
+    try {
+      await navigator.clipboard.writeText(url);
+      btn.classList.add('copied');
+      if (label) label.textContent = 'Copiado!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        if (label) label.textContent = 'RSS';
+      }, 2000);
+    } catch {
+      window.open(url, '_blank');
+    }
+  });
+</script>
