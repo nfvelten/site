@@ -38,6 +38,22 @@ const isActive = (path: string) =>
       </button>
       <div class="rss-tooltip">Copiar link do feed</div>
     </div>
+
+    <form
+      class="subscribe-inline"
+      action={`https://buttondown.email/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`}
+      method="post"
+      target="_blank"
+    >
+      <input
+        class="subscribe-inline-input"
+        type="email"
+        name="email"
+        placeholder="email"
+        required
+      />
+      <button class="subscribe-inline-btn" type="submit">→</button>
+    </form>
   </div>
 </aside>
 
