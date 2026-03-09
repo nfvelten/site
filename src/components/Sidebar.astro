@@ -92,5 +92,6 @@ const isActive = (path: string) =>
     const collapsed = sidebar.classList.toggle('collapsed');
     toggleIcon.style.transform = collapsed ? 'scaleX(-1)' : '';
     toggle.title = collapsed ? 'Expandir sidebar' : 'Recolher sidebar';
+    document.querySelector('.wrapper')?.classList.toggle('sidebar-collapsed', collapsed);
   });
 </script>
