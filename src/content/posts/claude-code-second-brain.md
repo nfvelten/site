@@ -5,15 +5,10 @@ description: Como tenho usado o Claude Code para montar um sistema de conhecimen
 tags: [notas, tecnologia]
 ---
 
-Comecei essa semana de férias sem nenhuma intenção de trabalhar. Não durou muito.
-
-Na segunda-feira tive que subir uma GMUD emergencial — uma mudança no CRM-service para viabilizar
-o início das vendas do Globoplay. Deu certo, fiz o que precisava ser feito, e voltei para as
-férias. Na terça fui passear em Maringá com a Andressa — HQs, sebo, café, Parque do Japão.
-Na quinta mais um deploy, dessa vez a migração do endpoint `criar-integração` para o `air-comercial`.
-
-No domingo resolvi finalmente sentar e montar o sistema que ficava postergando há meses.
-Passei os dois dias seguintes com o Claude Code, e saí do outro lado com algo que realmente uso.
+Comecei esse fim de semana sem nenhuma intenção de trabalhar. Era domingo de férias, e o
+plano era descansar. Resolvi finalmente sentar e montar o sistema que ficava postergando
+há meses. Passei os dois dias seguintes com o Claude Code, e saí do outro lado com algo
+que realmente uso.
 
 ---
 
