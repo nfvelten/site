@@ -88,10 +88,19 @@ const isActive = (path: string) =>
   const toggle = document.getElementById('sidebar-toggle') as HTMLButtonElement;
   const toggleIcon = toggle?.querySelector('svg') as SVGElement;
 
+  // Restore state from localStorage
+  if (localStorage.getItem('sidebar-collapsed') === 'true') {
+    sidebar.classList.add('collapsed');
+    document.querySelector('.wrapper')?.classList.add('sidebar-collapsed');
+    if (toggleIcon) toggleIcon.style.transform = 'scaleX(-1)';
+    toggle.title = 'Expandir sidebar';
+  }
+
   toggle?.addEventListener('click', () => {
     const collapsed = sidebar.classList.toggle('collapsed');
     toggleIcon.style.transform = collapsed ? 'scaleX(-1)' : '';
     toggle.title = collapsed ? 'Expandir sidebar' : 'Recolher sidebar';
     document.querySelector('.wrapper')?.classList.toggle('sidebar-collapsed', collapsed);
+    localStorage.setItem('sidebar-collapsed', String(collapsed));
   });
 </script>
