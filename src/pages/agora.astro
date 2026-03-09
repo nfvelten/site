@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+const updated = '09 de março de 2026';
+---
+
+<BaseLayout
+  title="Agora"
+  description="O que estou fazendo agora."
+>
+  <Sidebar slot="sidebar" />
+  <article>
+    <header class="post-header">
+      <h1>Agora</h1>
+      <div class="meta">Atualizado em {updated}</div>
+    </header>
+    <div class="prose">
+      <p>Escreva aqui o que está ocupando seu tempo, atenção e energia agora.</p>
+
+      <h2>Trabalhando em</h2>
+      <p>...</p>
+
+      <h2>Lendo</h2>
+      <p>...</p>
+
+      <h2>Pensando sobre</h2>
+      <p>...</p>
+    </div>
+  </article>
+</BaseLayout>

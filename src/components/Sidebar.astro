@@ -10,6 +10,7 @@ const isActive = (path: string) =>
   <nav>
     <a href="/" class:list={[{ active: currentPath === '/' }]}>Escrita</a>
     <a href="/leituras" class:list={[{ active: isActive('/leituras') }]}>Leituras</a>
+    <a href="/agora" class:list={[{ active: isActive('/agora') }]}>Agora</a>
     <a href="/sobre" class:list={[{ active: isActive('/sobre') }]}>Sobre</a>
   </nav>
 
