@@ -3,14 +3,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Sidebar from '../components/Sidebar.astro';
 ---
 
-<BaseLayout title="Sobre">
+<BaseLayout
+  title="Sobre"
+  description="Quem é Nicholas Velten."
+>
   <Sidebar slot="sidebar" />
   <article>
     <header class="post-header">
       <h1>Sobre</h1>
     </header>
     <div class="prose">
-      <p>Escreva aqui sobre você.</p>
+      <p>
+        Sou Nicholas Velten, desenvolvedor de software com foco em backend — Java, Spring,
+        microsserviços. Trabalho construindo e migrando sistemas financeiros, integrações e APIs.
+      </p>
+
+      <p>
+        Fora do trabalho, gosto de montar ambientes que funcionam bem: uso Linux com Hyprland,
+        Neovim como editor principal e Obsidian para manter um vault de notas pessoais e técnicas.
+        Tenho um certo apreço por ferramentas que ficam do jeito que você quer.
+      </p>
+
+      <p>
+        Gosto de ler — ficção científica, HQs, não-ficção sobre sistemas e ideias. Frequento sebos
+        e livrarias sempre que posso. Bebo mate e tereré.
+      </p>
+
+      <p>
+        Este site é onde publico o que estou pensando, lendo e aprendendo. Sem agenda, sem frequência
+        definida — só o que vale a pena registrar.
+      </p>
     </div>
   </article>
 </BaseLayout>
