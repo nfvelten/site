@@ -9,33 +9,41 @@ const CATEGORY_ID = 'DIC_kwDORh8mCs4C3_Eg';
   <button class="comments-toggle" id="toggle-comments">
     Mostrar comentários
   </button>
-  <div id="giscus-container" style="display:none">
-    <script
-      src="https://giscus.app/client.js"
-      data-repo={REPO}
-      data-repo-id={REPO_ID}
-      data-category={CATEGORY}
-      data-category-id={CATEGORY_ID}
-      data-mapping="pathname"
-      data-strict="1"
-      data-reactions-enabled="1"
-      data-emit-metadata="1"
-      data-input-position="bottom"
-      data-theme="preferred_color_scheme"
-      data-lang="pt"
-      data-loading="lazy"
-      crossorigin="anonymous"
-      async
-    ></script>
-  </div>
+  <div id="giscus-container" style="display:none"></div>
 </div>
 
-<script>
+<script define:vars={{ REPO, REPO_ID, CATEGORY, CATEGORY_ID }}>
   const btn = document.getElementById('toggle-comments');
   const container = document.getElementById('giscus-container');
+  let loaded = false;
+
   btn?.addEventListener('click', () => {
     const visible = container?.style.display !== 'none';
     if (container) container.style.display = visible ? 'none' : 'block';
     if (btn) btn.textContent = visible ? 'Mostrar comentários' : 'Ocultar comentários';
+
+    if (!visible && !loaded) {
+      loaded = true;
+      const siteTheme = document.documentElement.getAttribute('data-theme');
+      const giscusTheme = siteTheme === 'light' ? 'light' : 'dark_dimmed';
+
+      const script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.setAttribute('data-repo', REPO);
+      script.setAttribute('data-repo-id', REPO_ID);
+      script.setAttribute('data-category', CATEGORY);
+      script.setAttribute('data-category-id', CATEGORY_ID);
+      script.setAttribute('data-mapping', 'pathname');
+      script.setAttribute('data-strict', '1');
+      script.setAttribute('data-reactions-enabled', '1');
+      script.setAttribute('data-emit-metadata', '1');
+      script.setAttribute('data-input-position', 'bottom');
+      script.setAttribute('data-theme', giscusTheme);
+      script.setAttribute('data-lang', 'pt');
+      script.setAttribute('data-loading', 'lazy');
+      script.setAttribute('crossorigin', 'anonymous');
+      script.async = true;
+      container?.appendChild(script);
+    }
   });
 </script>

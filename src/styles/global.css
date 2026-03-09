@@ -83,7 +83,7 @@ body {
   position: sticky;
   top: 0;
   height: 100vh;
-  overflow-y: auto;
+  overflow: visible;
 }
 
 .sidebar-name {
@@ -188,6 +188,7 @@ body {
   transform: translateY(4px);
   transition: opacity 0.15s, transform 0.15s;
   box-shadow: 0 2px 8px color-mix(in srgb, var(--bg) 0%, transparent 20%);
+  z-index: 10;
 }
 
 .rss-wrap:hover .rss-tooltip { opacity: 1; transform: translateY(0); }
