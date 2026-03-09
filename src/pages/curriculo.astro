@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+---
+
+<BaseLayout
+  title="Currículo"
+  description="Trajetória profissional de Nicholas Velten."
+>
+  <Sidebar slot="sidebar" />
+  <article>
+    <header class="post-header">
+      <h1>Currículo</h1>
+      <div class="meta">
+        <a href="mailto:nikvelten@gmail.com">nikvelten@gmail.com</a>
+        · Paraná, Brasil
+        · <a href="https://www.linkedin.com/in/nicholasveltenfullstack" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </header>
+
+    <div class="prose">
+
+      <h2>Experiência</h2>
+
+      <div class="cv-entry">
+        <div class="cv-header">
+          <strong>Alloha Fibra</strong>
+          <span class="cv-period">jul. 2023 – presente</span>
+        </div>
+        <div class="cv-role">Full-stack Software Engineer · São Paulo</div>
+        <p>
+          Desenvolvimento de aplicações e serviços internos para uma das maiores empresas de
+          fibra óptica do Brasil. Atuação em projetos críticos com foco em escalabilidade,
+          manutenção de sistemas legados e entrega de novas funcionalidades.
+        </p>
+        <p>
+          Stack: React.js, Vue.js, Nuxt.js, Next.js, Tailwind CSS, PHP — Node.js, Nest.js,
+          TypeScript, Rust — Java, Spring — SQL, Docker, Kubernetes.
+        </p>
+      </div>
+
+      <div class="cv-entry">
+        <div class="cv-header">
+          <strong>LIGUE</strong> <span class="cv-note">(adquirida pela Alloha Fibra)</span>
+          <span class="cv-period">mai. 2022 – jul. 2023</span>
+        </div>
+        <div class="cv-role">Full-stack Software Engineer · Maringá, PR</div>
+        <p>
+          Desenvolvimento de sistemas internos e plataformas de comunicação em ambiente de
+          startup de telecomunicações. Continuidade do trabalho após a aquisição pela Alloha.
+        </p>
+        <p>
+          Stack: React.js, Vue.js, Nuxt.js, Next.js, Node.js, Nest.js, TypeScript, SQL,
+          Docker, Kubernetes.
+        </p>
+      </div>
+
+      <div class="cv-entry">
+        <div class="cv-header">
+          <strong>Kinebot</strong>
+          <span class="cv-period">fev. 2022 – mai. 2022</span>
+        </div>
+        <div class="cv-role">Full-stack Software Engineer · Curitiba, PR</div>
+        <p>
+          Desenvolvimento e manutenção de aplicações web com foco em qualidade de código e
+          escalabilidade. Uso de infraestrutura AWS para soluções serverless e de dados.
+        </p>
+        <p>
+          Stack: Node.js, React, Redux, AWS Lambda, S3, RDS.
+        </p>
+      </div>
+
+      <div class="cv-entry">
+        <div class="cv-header">
+          <strong>GetHash</strong>
+          <span class="cv-period">out. 2021 – fev. 2022</span>
+        </div>
+        <div class="cv-role">Full-stack Software Engineer · São Paulo</div>
+        <p>
+          Desenvolvimento de soluções para múltiplos clientes, da concepção à entrega.
+          Participação em reuniões com clientes em inglês e português. Envolvimento em
+          aquisição e gestão de projetos além do desenvolvimento.
+        </p>
+        <p>
+          Stack: Node.js, React, TypeScript, Next.js, Docker, Kubernetes, Rancher,
+          DigitalOcean, CI/CD.
+        </p>
+      </div>
+
+      <h2>Formação</h2>
+
+      <div class="cv-entry">
+        <div class="cv-header">
+          <strong>Centro Universitário Integrado</strong>
+          <span class="cv-period">2018 – 2021</span>
+        </div>
+        <div class="cv-role">Tecnólogo em Análise e Desenvolvimento de Sistemas</div>
+      </div>
+
+      <h2>Competências</h2>
+
+      <div class="cv-skills">
+        <div class="cv-skill-group">
+          <span class="cv-skill-label">Back-end</span>
+          Java · Spring · Node.js · Nest.js · TypeScript · Rust
+        </div>
+        <div class="cv-skill-group">
+          <span class="cv-skill-label">Front-end</span>
+          React.js · Vue.js · Nuxt.js · Next.js · Tailwind CSS
+        </div>
+        <div class="cv-skill-group">
+          <span class="cv-skill-label">Infraestrutura</span>
+          Docker · Kubernetes · AWS · GCP · DigitalOcean · CI/CD · Linux
+        </div>
+        <div class="cv-skill-group">
+          <span class="cv-skill-label">Práticas</span>
+          TDD · Clean Architecture · DDD · SOLID · SCRUM · Kanban
+        </div>
+        <div class="cv-skill-group">
+          <span class="cv-skill-label">Idiomas</span>
+          Português (nativo) · Inglês (fluente)
+        </div>
+      </div>
+
+      <h2>Certificações</h2>
+      <ul>
+        <li>Domain Driven Design (DDD)</li>
+        <li>TestJS Summit 2023</li>
+        <li>Observabilidade</li>
+        <li>Discover Especializar</li>
+        <li>Circuito Bankless: O Futuro do DeFi</li>
+      </ul>
+
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+.cv-entry {
+  margin-bottom: 2rem;
+}
+
+.cv-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.15rem;
+}
+
+.cv-period {
+  margin-left: auto;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: var(--tx-3);
+}
+
+.cv-note {
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: var(--tx-3);
+  font-style: italic;
+}
+
+.cv-role {
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  color: var(--tx-2);
+  margin-bottom: 0.6rem;
+}
+
+.cv-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.cv-skill-group {
+  font-family: system-ui, sans-serif;
+  font-size: 0.875rem;
+  color: var(--tx-2);
+}
+
+.cv-skill-label {
+  font-weight: 600;
+  color: var(--tx);
+  margin-right: 0.5rem;
+}
+</style>
