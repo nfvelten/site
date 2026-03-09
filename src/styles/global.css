@@ -68,7 +68,7 @@ body {
   display: flex;
   min-height: 100vh;
   max-width: 1100px;
-  margin: 0;
+  margin: 0 auto;
   padding-left: 1.5rem;
 }
 
@@ -76,15 +76,66 @@ body {
 .sidebar {
   width: 180px;
   flex-shrink: 0;
-  padding: 2.5rem 1.5rem 2.5rem 0;
+  padding: 2.5rem 0 2.5rem 0;
   border-right: 1px solid var(--ui);
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
   position: sticky;
   top: 0;
   height: 100vh;
   overflow: visible;
+  transition: width 0.3s ease, border-color 0.3s ease;
+  /* position:sticky is a positioned ancestor, so absolute children work */
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-right: 1.5rem;
+  height: 100%;
+  overflow: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.sidebar.collapsed {
+  width: 0;
+  border-color: transparent;
+}
+
+.sidebar.collapsed .sidebar-content {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ── Sidebar toggle button ───────────────────────────────────────── */
+.sidebar-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-2);
+  border: 1px solid var(--ui);
+  color: var(--tx-3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  padding: 0;
+}
+
+.sidebar-toggle:hover {
+  background: var(--bg-2);
+  border-color: var(--ui-3);
+  color: var(--tx);
+}
+
+.sidebar.collapsed .sidebar-toggle svg {
+  transform: scaleX(-1);
 }
 
 .sidebar-name {
@@ -375,18 +426,24 @@ hr { border: none; border-top: 1px solid var(--ui); margin: 2rem 0; }
 
 /* ── Responsivo ──────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .wrapper { flex-direction: column; }
+  .wrapper { flex-direction: column; padding-left: 0; }
   .sidebar {
-    width: 100%;
+    width: 100% !important;
     height: auto;
     position: static;
+    border-right: none;
+    border-bottom: 1px solid var(--ui);
+  }
+  .sidebar-content {
     flex-direction: row;
     flex-wrap: wrap;
     padding: 1rem;
-    border-right: none;
-    border-bottom: 1px solid var(--ui);
     gap: 1rem;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
   }
   .sidebar-tags, .sidebar-footer { display: none; }
+  .sidebar-toggle { display: none; }
   .main { padding: 1.5rem 1.25rem; }
 }

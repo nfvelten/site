@@ -9,52 +9,60 @@ const isActive = (path: string) =>
   currentPath === path || currentPath.startsWith(path + '/');
 ---
 
-<aside class="sidebar">
-  <a href="/" class="sidebar-name">Nicholas Velten</a>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-content">
+    <a href="/" class="sidebar-name">Nicholas Velten</a>
 
-  <nav>
-    <a href="/" class:list={[{ active: currentPath === '/' }]}>Escrita</a>
-    <a href="/leituras" class:list={[{ active: isActive('/leituras') }]}>Leituras</a>
-    <a href="/agora" class:list={[{ active: isActive('/agora') }]}>Agora</a>
-    <a href="/sobre" class:list={[{ active: isActive('/sobre') }]}>Sobre</a>
-  </nav>
+    <nav>
+      <a href="/" class:list={[{ active: currentPath === '/' }]}>Escrita</a>
+      <a href="/leituras" class:list={[{ active: isActive('/leituras') }]}>Leituras</a>
+      <a href="/agora" class:list={[{ active: isActive('/agora') }]}>Agora</a>
+      <a href="/sobre" class:list={[{ active: isActive('/sobre') }]}>Sobre</a>
+    </nav>
 
-  <div class="sidebar-tags">
-    <span>Tags</span>
-    <a href="/tags/notas">#notas</a>
-    <a href="/tags/livros">#livros</a>
-    <a href="/tags/tecnologia">#tecnologia</a>
-  </div>
-
-  <div class="sidebar-footer">
-    <div class="rss-wrap">
-      <button class="rss-btn" id="rss-copy" data-url={RSS_URL}>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-          <circle cx="5" cy="19" r="3"/>
-          <path d="M4 4a16 16 0 0 1 16 16h-3A13 13 0 0 0 4 7V4z"/>
-          <path d="M4 11a9 9 0 0 1 9 9H10a6 6 0 0 0-6-6v-3z"/>
-        </svg>
-        <span id="rss-label">RSS</span>
-      </button>
-      <div class="rss-tooltip">Copiar link do feed</div>
+    <div class="sidebar-tags">
+      <span>Tags</span>
+      <a href="/tags/notas">#notas</a>
+      <a href="/tags/livros">#livros</a>
+      <a href="/tags/tecnologia">#tecnologia</a>
     </div>
 
-    <form
-      class="subscribe-inline"
-      action={`https://buttondown.email/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`}
-      method="post"
-      target="_blank"
-    >
-      <input
-        class="subscribe-inline-input"
-        type="email"
-        name="email"
-        placeholder="email"
-        required
-      />
-      <button class="subscribe-inline-btn" type="submit">→</button>
-    </form>
+    <div class="sidebar-footer">
+      <div class="rss-wrap">
+        <button class="rss-btn" id="rss-copy" data-url={RSS_URL}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="5" cy="19" r="3"/>
+            <path d="M4 4a16 16 0 0 1 16 16h-3A13 13 0 0 0 4 7V4z"/>
+            <path d="M4 11a9 9 0 0 1 9 9H10a6 6 0 0 0-6-6v-3z"/>
+          </svg>
+          <span id="rss-label">RSS</span>
+        </button>
+        <div class="rss-tooltip">Copiar link do feed</div>
+      </div>
+
+      <form
+        class="subscribe-inline"
+        action={`https://buttondown.email/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`}
+        method="post"
+        target="_blank"
+      >
+        <input
+          class="subscribe-inline-input"
+          type="email"
+          name="email"
+          placeholder="email"
+          required
+        />
+        <button class="subscribe-inline-btn" type="submit">→</button>
+      </form>
+    </div>
   </div>
+
+  <button class="sidebar-toggle" id="sidebar-toggle" title="Recolher sidebar">
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <polyline points="6,2 3,5 6,8" />
+    </svg>
+  </button>
 </aside>
 
 <script>
@@ -74,5 +82,15 @@ const isActive = (path: string) =>
     } catch {
       window.open(url, '_blank');
     }
+  });
+
+  const sidebar = document.getElementById('sidebar') as HTMLElement;
+  const toggle = document.getElementById('sidebar-toggle') as HTMLButtonElement;
+  const toggleIcon = toggle?.querySelector('svg') as SVGElement;
+
+  toggle?.addEventListener('click', () => {
+    const collapsed = sidebar.classList.toggle('collapsed');
+    toggleIcon.style.transform = collapsed ? 'scaleX(-1)' : '';
+    toggle.title = collapsed ? 'Expandir sidebar' : 'Recolher sidebar';
   });
 </script>
