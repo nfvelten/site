@@ -1,46 +1,46 @@
-/* ── Selenized — light (6h–18h) ──────────────────────────────────── */
+/* ── Tererê — light (6h–18h) ─────────────────────────────────────── */
 [data-theme="light"] {
-  --bg:      #fbf3db;
-  --bg-2:    #ece3cc;
-  --ui:      #d5cdb6;
-  --ui-2:    #c4bba8;
-  --ui-3:    #909995;
-  --tx:      #184956;
-  --tx-2:    #3a4d53;
-  --tx-3:    #909995;
+  --bg:      #fbf1c7;
+  --bg-2:    #ebdfb0;
+  --ui:      #ddd2a0;
+  --ui-2:    #928374;
+  --ui-3:    #7c6f64;
+  --tx:      #3c3836;
+  --tx-2:    #504945;
+  --tx-3:    #665c54;
 
-  --red:     #d2212d;
-  --orange:  #c25d1e;
-  --yellow:  #ad8900;
-  --green:   #489100;
-  --cyan:    #00978a;
-  --blue:    #0072d4;
-  --purple:  #7762d7;
-  --magenta: #ca4898;
+  --red:     #9d0006;
+  --orange:  #c88010;
+  --yellow:  #b57614;
+  --green:   #79740e;
+  --cyan:    #427b58;
+  --blue:    #076678;
+  --purple:  #8f3f71;
+  --magenta: #9d4f7d;
 
   --accent:  var(--blue);
   --link:    var(--blue);
 }
 
-/* ── Selenized — dark (18h–6h) ───────────────────────────────────── */
+/* ── Cimarrão — dark (18h–6h) ────────────────────────────────────── */
 [data-theme="dark"] {
-  --bg:      #103c48;
-  --bg-2:    #184956;
-  --ui:      #2d5b69;
-  --ui-2:    #3a6a7a;
-  --ui-3:    #72898f;
-  --tx:      #cad8d9;
-  --tx-2:    #adbcbc;
-  --tx-3:    #72898f;
+  --bg:      #1c1e13;
+  --bg-2:    #282d1c;
+  --ui:      #363c26;
+  --ui-2:    #4f5b4a;
+  --ui-3:    #5a6a54;
+  --tx:      #dce0d9;
+  --tx-2:    #a8b09f;
+  --tx-3:    #7a8573;
 
-  --red:     #fa5750;
-  --orange:  #ed8649;
-  --yellow:  #dbb32d;
-  --green:   #70b433;
-  --cyan:    #25a8a8;
-  --blue:    #4695f7;
-  --purple:  #af88eb;
-  --magenta: #f275be;
+  --red:     #c25d44;
+  --orange:  #c09060;
+  --yellow:  #a67c52;
+  --green:   #7a9e38;
+  --cyan:    #5ea89a;
+  --blue:    #7eb2d1;
+  --purple:  #b07878;
+  --magenta: #c08888;
 
   --accent:  var(--blue);
   --link:    var(--blue);
