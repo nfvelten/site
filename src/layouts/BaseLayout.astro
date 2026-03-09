@@ -1,0 +1,30 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = 'Nicholas Velten', description = 'Escrita e leituras' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="Nicholas Velten" href="/rss.xml" />
+    <title>{title === 'Nicholas Velten' ? title : `${title} — Nicholas Velten`}</title>
+    <style is:global>
+      @import '../styles/global.css';
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <slot name="sidebar" />
+      <main class="main">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>

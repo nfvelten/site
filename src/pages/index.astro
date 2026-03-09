@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+function readingTime(body: string | undefined) {
+  if (!body) return 1;
+  const words = body.trim().split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+---
+
+<BaseLayout>
+  <Sidebar slot="sidebar" />
+  <ul class="post-list">
+    {posts.map(post => (
+      <li class="post-item">
+        <div class="post-meta">
+          <time datetime={post.data.date.toISOString()}>
+            {post.data.date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </time>
+          <span>{readingTime(post.body)} min</span>
+        </div>
+        <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-title">{post.data.title}</a>
+        {post.data.description && (
+          <p class="post-excerpt">{post.data.description}</p>
+        )}
+      </li>
+    ))}
+    {posts.length === 0 && (
+      <li style="color: var(--tx-3); font-size: 0.9rem;">Nenhum post publicado ainda.</li>
+    )}
+  </ul>
+</BaseLayout>

@@ -1,0 +1,30 @@
+---
+import PostLayout from '../../layouts/PostLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { id: post.id.replace(/\.mdx?$/, '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+function readingTime(body: string | undefined) {
+  if (!body) return 1;
+  return Math.max(1, Math.ceil(body.trim().split(/\s+/).length / 200));
+}
+---
+
+<PostLayout
+  title={post.data.title}
+  date={post.data.date}
+  tags={post.data.tags}
+  description={post.data.description}
+  readingTime={readingTime(post.body)}
+>
+  <Content />
+</PostLayout>

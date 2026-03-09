@@ -1,0 +1,42 @@
+---
+// Configurar após criar o repositório GitHub e registrar no giscus.app
+const REPO = 'seu-usuario/seu-repo';
+const REPO_ID = 'REPO_ID_AQUI';
+const CATEGORY = 'Announcements';
+const CATEGORY_ID = 'CATEGORY_ID_AQUI';
+---
+
+<div class="comments">
+  <button class="comments-toggle" id="toggle-comments">
+    Mostrar comentários
+  </button>
+  <div id="giscus-container" style="display:none">
+    <script
+      src="https://giscus.app/client.js"
+      data-repo={REPO}
+      data-repo-id={REPO_ID}
+      data-category={CATEGORY}
+      data-category-id={CATEGORY_ID}
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="preferred_color_scheme"
+      data-lang="pt"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async
+    ></script>
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById('toggle-comments');
+  const container = document.getElementById('giscus-container');
+  btn?.addEventListener('click', () => {
+    const visible = container?.style.display !== 'none';
+    if (container) container.style.display = visible ? 'none' : 'block';
+    if (btn) btn.textContent = visible ? 'Mostrar comentários' : 'Ocultar comentários';
+  });
+</script>

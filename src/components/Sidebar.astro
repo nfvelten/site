@@ -1,0 +1,22 @@
+---
+const currentPath = Astro.url.pathname;
+const isActive = (path: string) =>
+  currentPath === path || currentPath.startsWith(path + '/');
+---
+
+<aside class="sidebar">
+  <a href="/" class="sidebar-name">Nicholas Velten</a>
+
+  <nav>
+    <a href="/" class:list={[{ active: currentPath === '/' }]}>Escrita</a>
+    <a href="/leituras" class:list={[{ active: isActive('/leituras') }]}>Leituras</a>
+    <a href="/sobre" class:list={[{ active: isActive('/sobre') }]}>Sobre</a>
+  </nav>
+
+  <div class="sidebar-tags">
+    <span>Tags</span>
+    <a href="/tags/notas">#notas</a>
+    <a href="/tags/livros">#livros</a>
+    <a href="/tags/tecnologia">#tecnologia</a>
+  </div>
+</aside>
