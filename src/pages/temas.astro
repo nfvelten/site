@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+const themes = [
+  {
+    id: 'nvim',
+    name: 'yerba-mate.nvim',
+    desc: 'Colorscheme para Neovim — cobre editor UI, syntax, Treesitter, LSP, Telescope, nvim-cmp e mais.',
+    url: 'https://github.com/mateCreations/yerba-mate.nvim',
+    install: '{ "mateCreations/yerba-mate.nvim" }',
+    installLabel: 'lazy.nvim',
+  },
+  {
+    id: 'obsidian',
+    name: 'obsidian-yerba-mate',
+    desc: 'Tema para Obsidian com variante dark (Yerba Mate) e light (Tererê). Disponível na galeria de temas da comunidade.',
+    url: 'https://github.com/mateCreations/obsidian-yerba-mate',
+    install: null,
+    installLabel: null,
+  },
+  {
+    id: 'vscode',
+    name: 'vscode-yerba-mate',
+    desc: 'Extensão para Visual Studio Code com variante dark e light.',
+    url: 'https://github.com/mateCreations/vscode-yerba-mate',
+    install: null,
+    installLabel: null,
+  },
+  {
+    id: 'omarchy',
+    name: 'omarchy-yerba-mate + omarchy-terere',
+    desc: 'Temas de sistema para Omarchy — dark e light para o ambiente desktop inteiro.',
+    url: 'https://github.com/mateCreations',
+    install: 'omarchy-theme-install github.com/mateCreations/omarchy-yerba-mate',
+    installLabel: 'omarchy',
+  },
+  {
+    id: 'zen',
+    name: 'Yerba Mate + Tererê para Zen Browser',
+    desc: 'Temas para o Zen Browser disponíveis no marketplace oficial.',
+    url: 'https://github.com/mateCreations',
+    install: null,
+    installLabel: null,
+  },
+];
+---
+
+<BaseLayout
+  title="Temas"
+  description="mateCreations — família de temas Yerba Mate e Tererê para Neovim, VSCode, Obsidian, Omarchy e Zen Browser."
+>
+  <Sidebar slot="sidebar" />
+  <article>
+    <header class="post-header">
+      <h1>Temas</h1>
+    </header>
+    <div class="prose">
+      <div class="mate-intro">
+        <img
+          src="https://raw.githubusercontent.com/mateCreations/omarchy-yerba-mate/master/images/logo.jpg"
+          alt="Mate"
+          class="mate-logo"
+        />
+        <div>
+          <p>
+            <a href="https://github.com/mateCreations" target="_blank" rel="noopener">mateCreations</a> é
+            uma família de temas inspirada no mate e no tererê — dois lados da mesma cuia.
+          </p>
+          <p>
+            <strong>Yerba Mate</strong> é o tema dark: fundo verde-oliva escuro, acentos em ocre,
+            azul aço e verde mate. <strong>Tererê</strong> é o light: papel manteiga, âmbar dourado
+            e vinho fundo. Os dois cobrem o mesmo ambiente — do terminal ao navegador.
+          </p>
+        </div>
+      </div>
+
+      <div class="palette-pair">
+        <figure>
+          <img
+            src="https://raw.githubusercontent.com/mateCreations/omarchy-yerba-mate/master/images/palette-yerba-mate.png"
+            alt="Paleta Yerba Mate"
+          />
+          <figcaption>Yerba Mate — dark</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="https://raw.githubusercontent.com/mateCreations/omarchy-terere/master/images/palette-terere.png"
+            alt="Paleta Tererê"
+          />
+          <figcaption>Tererê — light</figcaption>
+        </figure>
+      </div>
+
+      <h2>Ports</h2>
+
+      {themes.map(t => (
+        <div class="theme-entry">
+          <h3><a href={t.url} target="_blank" rel="noopener">{t.name}</a></h3>
+          <p>{t.desc}</p>
+          {t.install && (
+            <pre class="theme-install"><code>{t.install}</code></pre>
+          )}
+        </div>
+      ))}
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .mate-intro {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+
+  .mate-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+
+  .palette-pair {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .palette-pair figure {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .palette-pair img {
+    width: 100%;
+    border-radius: 6px;
+    display: block;
+  }
+
+  .palette-pair figcaption {
+    font-family: system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: var(--tx-3);
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+
+  .theme-entry {
+    margin-bottom: 2rem;
+  }
+
+  .theme-entry h3 {
+    margin-bottom: 0.25rem;
+  }
+
+  .theme-entry p {
+    margin-bottom: 0.5rem;
+    color: var(--tx-2);
+  }
+
+  .theme-install {
+    background: var(--bg-2);
+    border: 1px solid var(--ui);
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    overflow-x: auto;
+    margin-top: 0.5rem;
+  }
+
+  .theme-install code {
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    color: var(--tx);
+  }
+</style>
