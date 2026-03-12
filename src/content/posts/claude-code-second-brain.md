@@ -60,7 +60,7 @@ Uma das coisas que mais me incomodava era a inconsistência visual entre os ambi
 terminal, editor, barra do sistema. Cada um com uma paleta diferente, nada conversando
 entre si.
 
-Criei dois temas — cimarrão (escuro, paleta oliva-industrial) e tererê (claro, tons de
+Criei dois temas — Yerba Mate (escuro, paleta oliva-industrial) e Tererê (claro, tons de
 manteiga de papel) — e o Claude Code ajudou a aplicar a mesma paleta em todos os
 ambientes ao mesmo tempo: Neovim, configuração do sistema (Omarchy/Hyprland), Obsidian e
 este site.
