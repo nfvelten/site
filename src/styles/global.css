@@ -172,6 +172,12 @@ body {
 .sidebar nav a:hover,
 .sidebar nav a.active { color: var(--tx); }
 
+.nav-divider {
+  border: none;
+  border-top: 1px solid var(--ui);
+  margin: 0.4rem 0;
+}
+
 .sidebar-tags {
   display: flex;
   flex-direction: column;
