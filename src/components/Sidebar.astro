@@ -9,6 +9,16 @@ const isActive = (path: string) =>
   currentPath === path || currentPath.startsWith(path + '/');
 ---
 
+<button class="mobile-menu-btn" id="mobile-menu-btn" title="Menu" aria-label="Abrir menu">
+  <svg width="14" height="11" viewBox="0 0 14 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+    <line x1="0" y1="1" x2="14" y2="1"/>
+    <line x1="0" y1="5.5" x2="14" y2="5.5"/>
+    <line x1="0" y1="10" x2="14" y2="10"/>
+  </svg>
+</button>
+
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-content">
     <a href="/sobre" class="sidebar-name">Nicholas Velten</a>
@@ -88,20 +98,49 @@ const isActive = (path: string) =>
   const sidebar = document.getElementById('sidebar') as HTMLElement;
   const toggle = document.getElementById('sidebar-toggle') as HTMLButtonElement;
   const toggleIcon = toggle?.querySelector('svg') as SVGElement;
+  const backdrop = document.getElementById('sidebar-backdrop') as HTMLElement;
+  const mobileBtn = document.getElementById('mobile-menu-btn') as HTMLButtonElement;
 
-  // Restore state from localStorage
+  const isMobile = () => window.innerWidth <= 768;
+
+  // ── Desktop: collapse/expand ──────────────────────────────────────
   if (localStorage.getItem('sidebar-collapsed') === 'true') {
     sidebar.classList.add('collapsed');
     document.querySelector('.wrapper')?.classList.add('sidebar-collapsed');
     if (toggleIcon) toggleIcon.style.transform = 'scaleX(-1)';
-    toggle.title = 'Expandir sidebar';
+    if (toggle) toggle.title = 'Expandir sidebar';
   }
 
   toggle?.addEventListener('click', () => {
+    if (isMobile()) return;
     const collapsed = sidebar.classList.toggle('collapsed');
     toggleIcon.style.transform = collapsed ? 'scaleX(-1)' : '';
     toggle.title = collapsed ? 'Expandir sidebar' : 'Recolher sidebar';
     document.querySelector('.wrapper')?.classList.toggle('sidebar-collapsed', collapsed);
     localStorage.setItem('sidebar-collapsed', String(collapsed));
+  });
+
+  // ── Mobile: drawer ────────────────────────────────────────────────
+  function openMobileSidebar() {
+    sidebar.classList.add('mobile-open');
+    backdrop.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileSidebar() {
+    sidebar.classList.remove('mobile-open');
+    backdrop.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  mobileBtn?.addEventListener('click', () => {
+    sidebar.classList.contains('mobile-open') ? closeMobileSidebar() : openMobileSidebar();
+  });
+
+  backdrop?.addEventListener('click', closeMobileSidebar);
+
+  // Fecha o drawer ao navegar para outra página no mobile
+  document.querySelectorAll('.sidebar nav a').forEach(link => {
+    link.addEventListener('click', () => { if (isMobile()) closeMobileSidebar(); });
   });
 </script>
