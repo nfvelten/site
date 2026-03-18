@@ -13,7 +13,7 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://nicholas-velten.xyz');
-const fullTitle = title === 'Nicholas Velten' ? title : `${title} — Nicholas Velten`;
+const fullTitle = title.includes('Nicholas Velten') ? title : `${title} — Nicholas Velten`;
 
 const schemaWebSite = {
   '@context': 'https://schema.org',
