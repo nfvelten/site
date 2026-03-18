@@ -27,6 +27,21 @@ const websiteSchema = {
       inLanguage: 'pt-BR',
     },
     {
+      '@type': 'Organization',
+      '@id': 'https://nicholas-velten.xyz/#organization',
+      name: 'Nicholas Velten',
+      url: 'https://nicholas-velten.xyz',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://nicholas-velten.xyz/favicon.svg',
+        contentUrl: 'https://nicholas-velten.xyz/favicon.svg',
+      },
+      founder: { '@id': 'https://nicholas-velten.xyz/#person' },
+      sameAs: [
+        'https://www.linkedin.com/in/nicholasveltenfullstack',
+      ],
+    },
+    {
       '@type': 'Person',
       '@id': 'https://nicholas-velten.xyz/#person',
       name: 'Nicholas Velten',
@@ -41,6 +56,16 @@ const websiteSchema = {
       sameAs: [
         'https://www.linkedin.com/in/nicholasveltenfullstack',
       ],
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonical.toString()}#webpage`,
+      url: canonical.toString(),
+      name: fullTitle,
+      description: description,
+      inLanguage: 'pt-BR',
+      isPartOf: { '@id': 'https://nicholas-velten.xyz/#website' },
+      about: { '@id': 'https://nicholas-velten.xyz/#person' },
     },
   ],
 };
