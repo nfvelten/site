@@ -16,9 +16,31 @@ const { title, date, tags = [], description, readingTime } = Astro.props;
 const formattedDate = date.toLocaleDateString('pt-BR', {
   day: 'numeric', month: 'long', year: 'numeric',
 });
+
+const postUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://nicholas-velten.xyz').toString();
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description ?? `${title} — Nicholas Velten`,
+  datePublished: date.toISOString(),
+  url: postUrl,
+  inLanguage: 'pt-BR',
+  author: {
+    '@type': 'Person',
+    name: 'Nicholas Velten',
+    url: 'https://nicholas-velten.xyz/sobre',
+  },
+  publisher: {
+    '@type': 'Person',
+    name: 'Nicholas Velten',
+    url: 'https://nicholas-velten.xyz',
+  },
+};
 ---
 
-<BaseLayout title={title} description={description ?? `${title} — Nicholas Velten`}>
+<BaseLayout title={title} description={description ?? `${title} — Nicholas Velten`} jsonLd={articleSchema}>
   <Sidebar slot="sidebar" />
   <article>
     <header class="post-header">

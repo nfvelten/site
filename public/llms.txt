@@ -1,0 +1,31 @@
+# Nicholas Velten
+
+> Site pessoal de Nicholas Velten — engenheiro de software full-stack com foco em sistemas escaláveis e bem estruturados. Publica escrita sobre tecnologia, registros de leitura e aprendizados técnicos.
+
+## Sobre o autor
+
+Nicholas Velten é engenheiro de software full-stack com cerca de quatro anos de experiência profissional. Trabalha atualmente na Alloha Fibra, desenvolvendo aplicações e serviços com Java, TypeScript, Vue.js e Node.js. Sua experiência abrange telecomunicações, fintechs e startups de produto.
+
+Usa Linux com Hyprland, Neovim como editor e Obsidian para gestão de conhecimento pessoal e técnico.
+
+Mora em Maringá, Paraná, Brasil.
+
+## Conteúdo disponível
+
+- **Escrita** (`/posts`): reflexões sobre tecnologia, ferramentas, desenvolvimento e aprendizados
+- **Leituras** (`/leituras`): registros de livros lidos — ficção científica, HQs e técnicos
+- **Currículo** (`/curriculo`): experiência profissional, habilidades técnicas e formação
+- **Agora** (`/agora`): o que está acontecendo no momento (atualizado periodicamente)
+- **Sobre** (`/sobre`): quem é Nicholas Velten
+
+## Contato
+
+- Email: nikvelten@gmail.com
+- LinkedIn: https://www.linkedin.com/in/nicholasveltenfullstack
+
+## Informações técnicas
+
+- Idioma principal: português (pt-BR)
+- Feed RSS disponível: /rss.xml
+- Sitemap: /sitemap-index.xml
+- Licença de conteúdo: os textos podem ser citados com atribuição ao autor
