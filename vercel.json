@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/sobre", "destination": "/", "permanent": true }
+  ]
+}
