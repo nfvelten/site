@@ -15,8 +15,12 @@ const statusLabel: Record<string, string> = {
 };
 ---
 
-<BaseLayout title="Leituras">
+<BaseLayout
+  title="Leituras"
+  description="Lista de leituras de Nicholas Velten — livros lidos, em andamento e na fila. Ficção científica, HQs e técnicos."
+>
   <Sidebar slot="sidebar" />
+  <h1 class="page-heading">Leituras</h1>
 
   {lendo.length > 0 && (
     <section style="margin-bottom: 2.5rem">

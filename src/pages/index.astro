@@ -11,10 +11,46 @@ function readingTime(body: string | undefined) {
   const words = body.trim().split(/\s+/).length;
   return Math.max(1, Math.ceil(words / 200));
 }
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'O que é o site de Nicholas Velten?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Site pessoal de Nicholas Velten — engenheiro de software full-stack. Reúne textos sobre tecnologia, ferramentas e aprendizados, além de registros de leitura.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Sobre o que Nicholas Velten escreve?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Nicholas escreve sobre tecnologia, ferramentas de desenvolvimento, arquitetura de software e aprendizados do dia a dia. Sem pauta fixa — só o que vale registrar.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Como entrar em contato com Nicholas Velten?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Por email em nikvelten@gmail.com ou pelo LinkedIn em linkedin.com/in/nicholasveltenfullstack.',
+      },
+    },
+  ],
+};
 ---
 
-<BaseLayout>
+<BaseLayout
+  title="Escrita"
+  description="Textos de Nicholas Velten sobre tecnologia, ferramentas e aprendizados. Reflexões diretas, sem pauta fixa."
+  jsonLd={faqSchema}
+>
   <Sidebar slot="sidebar" />
+  <h1 class="page-heading">Escrita</h1>
   <ul class="post-list">
     {posts.map(post => (
       <li class="post-item">
