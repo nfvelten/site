@@ -51,6 +51,10 @@ const faqSchema = {
 >
   <Sidebar slot="sidebar" />
   <h1 class="page-heading">Escrita</h1>
+  <p class="page-intro">
+    Textos sobre tecnologia, ferramentas e aprendizados do dia a dia como engenheiro de software.
+    Sem pauta fixa — só o que vale registrar.
+  </p>
   <ul class="post-list">
     {posts.map(post => (
       <li class="post-item">
@@ -70,4 +74,52 @@ const faqSchema = {
       <li style="color: var(--tx-3); font-size: 0.9rem;">Nenhum post publicado ainda.</li>
     )}
   </ul>
+
+  <section class="faq-section" aria-label="Perguntas frequentes">
+    <h2>Perguntas frequentes</h2>
+
+    <div class="faq-item">
+      <h3>Quem é Nicholas Velten?</h3>
+      <p>
+        Engenheiro de software full-stack com cerca de quatro anos de experiência, atuando com
+        Java, TypeScript, Vue.js e Node.js. Trabalha na Alloha Fibra, com passagem por
+        empresas de telecomunicações, fintechs e startups de produto. É de Maringá, Paraná.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Sobre o que você escreve aqui?</h3>
+      <p>
+        Reflexões sobre tecnologia, ferramentas de desenvolvimento e aprendizados técnicos.
+        Às vezes sobre o ambiente de trabalho — editor, terminal, organização pessoal. O critério
+        é simples: o que vale registrar e que pode ser útil reler depois.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Qual é a frequência de publicação?</h3>
+      <p>
+        Não há frequência definida. Os textos aparecem quando há algo que vale escrever, não
+        por obrigação de calendário. A ideia é manter a qualidade acima da quantidade.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>O site tem outras seções além da escrita?</h3>
+      <p>
+        Sim. A seção <a href="/leituras">Leituras</a> reúne registros de livros lidos, em
+        andamento e na fila — ficção científica, HQs e técnicos. A página
+        <a href="/agora">Agora</a> mostra o que está acontecendo no momento. O
+        <a href="/curriculo">Currículo</a> lista a experiência profissional completa.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Como entrar em contato?</h3>
+      <p>
+        Por email em <a href="mailto:nikvelten@gmail.com">nikvelten@gmail.com</a> ou pelo
+        <a href="https://www.linkedin.com/in/nicholasveltenfullstack" target="_blank" rel="noopener">LinkedIn</a>.
+      </p>
+    </div>
+  </section>
 </BaseLayout>
