@@ -1,16 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Sidebar from '../components/Sidebar.astro';
-import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('posts', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-
-function readingTime(body: string | undefined) {
-  if (!body) return 1;
-  const words = body.trim().split(/\s+/).length;
-  return Math.max(1, Math.ceil(words / 200));
-}
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -18,18 +8,18 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'O que é o site de Nicholas Velten?',
+      name: 'O que faz Nicholas Velten?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Site pessoal de Nicholas Velten — engenheiro de software full-stack. Reúne textos sobre tecnologia, ferramentas e aprendizados, além de registros de leitura.',
+        text: 'Nicholas Velten é engenheiro de software full-stack com foco em construir sistemas escaláveis e bem estruturados. Trabalha na Alloha Fibra desenvolvendo aplicações e serviços com Java, TypeScript, Vue.js e Node.js, com cerca de quatro anos de experiência em telecomunicações, fintechs e startups de produto.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Sobre o que Nicholas Velten escreve?',
+      name: 'Quais tecnologias Nicholas Velten usa?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Nicholas escreve sobre tecnologia, ferramentas de desenvolvimento, arquitetura de software e aprendizados do dia a dia. Sem pauta fixa — só o que vale registrar.',
+        text: 'No trabalho, Nicholas usa principalmente Java, TypeScript, Vue.js e Node.js. No ambiente pessoal, usa Linux com Hyprland como gerenciador de janelas, Neovim como editor de código e Obsidian para gestão de conhecimento.',
       },
     },
     {
@@ -37,7 +27,15 @@ const faqSchema = {
       name: 'Como entrar em contato com Nicholas Velten?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Por email em nikvelten@gmail.com ou pelo LinkedIn em linkedin.com/in/nicholasveltenfullstack.',
+        text: 'Você pode entrar em contato pelo email nikvelten@gmail.com ou pelo LinkedIn em linkedin.com/in/nicholasveltenfullstack.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'O que é publicado neste site?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'O site reúne escrita pessoal sobre tecnologia, ferramentas de desenvolvimento e aprendizados. Também inclui registros de leitura (livros lidos, em andamento e planejados). Sem frequência definida — só o que vale registrar.',
       },
     },
   ],
@@ -45,81 +43,74 @@ const faqSchema = {
 ---
 
 <BaseLayout
-  title="Escrita"
-  description="Textos de Nicholas Velten sobre tecnologia, ferramentas e aprendizados. Reflexões diretas, sem pauta fixa."
+  title="Nicholas Velten"
+  description="Conheça Nicholas Velten — engenheiro de software full-stack com experiência em Java, TypeScript e Vue.js. Projetos, contato e mais."
   jsonLd={faqSchema}
 >
   <Sidebar slot="sidebar" />
-  <h1 class="page-heading">Escrita</h1>
-  <p class="page-intro">
-    Textos sobre tecnologia, ferramentas e aprendizados do dia a dia como engenheiro de software.
-    Sem pauta fixa — só o que vale registrar.
-  </p>
-  <ul class="post-list">
-    {posts.map(post => (
-      <li class="post-item">
-        <div class="post-meta">
-          <time datetime={post.data.date.toISOString()}>
-            {post.data.date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}
-          </time>
-          <span>{readingTime(post.body)} min</span>
-        </div>
-        <a href={`/posts/${post.id.replace(/\.md$/, '')}`} class="post-title">{post.data.title}</a>
-        {post.data.description && (
-          <p class="post-excerpt">{post.data.description}</p>
-        )}
-      </li>
-    ))}
-    {posts.length === 0 && (
-      <li style="color: var(--tx-3); font-size: 0.9rem;">Nenhum post publicado ainda.</li>
-    )}
-  </ul>
-
-  <section class="faq-section" aria-label="Perguntas frequentes">
-    <h2>Perguntas frequentes</h2>
-
-    <div class="faq-item">
-      <h3>Quem é Nicholas Velten?</h3>
+  <article>
+    <header class="post-header">
+      <h1>Nicholas Velten</h1>
+    </header>
+    <div class="prose">
       <p>
-        Engenheiro de software full-stack com cerca de quatro anos de experiência, atuando com
-        Java, TypeScript, Vue.js e Node.js. Trabalha na Alloha Fibra, com passagem por
-        empresas de telecomunicações, fintechs e startups de produto. É de Maringá, Paraná.
+        Sou Nicholas Velten, engenheiro de software full-stack com foco em construir sistemas
+        escaláveis e bem estruturados. Trabalho atualmente na Alloha Fibra, onde desenvolvo
+        aplicações e serviços em Java, TypeScript, Vue.js e Node.js. Tenho cerca de quatro anos
+        de experiência profissional, passando por empresas de telecomunicações, fintechs e
+        startups de produto.
       </p>
-    </div>
 
-    <div class="faq-item">
-      <h3>Sobre o que você escreve aqui?</h3>
       <p>
-        Reflexões sobre tecnologia, ferramentas de desenvolvimento e aprendizados técnicos.
-        Às vezes sobre o ambiente de trabalho — editor, terminal, organização pessoal. O critério
-        é simples: o que vale registrar e que pode ser útil reler depois.
+        Gosto de entender sistemas por inteiro — do banco de dados ao componente de interface.
+        Tenho apreço por código limpo, arquitetura que faz sentido e ferramentas que ficam do
+        jeito que você quer. No dia a dia uso Linux com Hyprland, Neovim como editor e Obsidian
+        para manter um vault de notas técnicas e pessoais.
       </p>
-    </div>
 
-    <div class="faq-item">
-      <h3>Qual é a frequência de publicação?</h3>
       <p>
-        Não há frequência definida. Os textos aparecem quando há algo que vale escrever, não
-        por obrigação de calendário. A ideia é manter a qualidade acima da quantidade.
+        Fora do trabalho, leio bastante — ficção científica, HQs e livros técnicos. Frequento
+        sebos sempre que posso. Bebo mate e tererê. Sou de Maringá, Paraná.
       </p>
-    </div>
 
-    <div class="faq-item">
-      <h3>O site tem outras seções além da escrita?</h3>
       <p>
-        Sim. A seção <a href="/leituras">Leituras</a> reúne registros de livros lidos, em
-        andamento e na fila — ficção científica, HQs e técnicos. A página
-        <a href="/agora">Agora</a> mostra o que está acontecendo no momento. O
-        <a href="/curriculo">Currículo</a> lista a experiência profissional completa.
+        Este site é onde publico o que estou pensando, aprendendo e lendo.
+        Sem frequência definida — só o que vale registrar.
       </p>
-    </div>
 
-    <div class="faq-item">
+      <p>
+        <a href="/curriculo">Currículo</a> ·
+        <a href="https://www.linkedin.com/in/nicholasveltenfullstack" target="_blank" rel="noopener">LinkedIn</a> ·
+        <a href="mailto:nikvelten@gmail.com">nikvelten@gmail.com</a>
+      </p>
+
+      <h2>Perguntas frequentes</h2>
+
+      <h3>O que faz Nicholas Velten?</h3>
+      <p>
+        Engenheiro de software full-stack com foco em sistemas escaláveis. Trabalho com Java,
+        TypeScript, Vue.js e Node.js na Alloha Fibra, com passagem por telecomunicações,
+        fintechs e startups de produto.
+      </p>
+
+      <h3>Quais tecnologias você usa?</h3>
+      <p>
+        No trabalho: Java, TypeScript, Vue.js, Node.js. No ambiente pessoal: Linux com Hyprland,
+        Neovim e Obsidian. Prefiro ferramentas que dão controle e que funcionam do jeito que
+        você configura.
+      </p>
+
+      <h3>O que é publicado aqui?</h3>
+      <p>
+        Escrita sobre tecnologia, ferramentas e aprendizados. Registros de leitura. Sem pauta
+        fixa — só o que vale registrar.
+      </p>
+
       <h3>Como entrar em contato?</h3>
       <p>
-        Por email em <a href="mailto:nikvelten@gmail.com">nikvelten@gmail.com</a> ou pelo
+        Email: <a href="mailto:nikvelten@gmail.com">nikvelten@gmail.com</a> ou
         <a href="https://www.linkedin.com/in/nicholasveltenfullstack" target="_blank" rel="noopener">LinkedIn</a>.
       </p>
     </div>
-  </section>
+  </article>
 </BaseLayout>
