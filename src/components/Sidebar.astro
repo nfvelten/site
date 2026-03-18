@@ -29,14 +29,8 @@ const isActive = (path: string) =>
       <a href="/matecreations" class:list={[{ active: isActive('/matecreations') }]}>mateCreations</a>
     </nav>
 
-    <div class="sidebar-tags">
-      <span>Tags</span>
-      <a href="/tags/notas">#notas</a>
-      <a href="/tags/livros">#livros</a>
-      <a href="/tags/tecnologia">#tecnologia</a>
-    </div>
 
-    <div class="sidebar-footer">
+<div class="sidebar-footer">
       <div class="rss-wrap">
         <button class="rss-btn" id="rss-copy" data-url={RSS_URL}>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
