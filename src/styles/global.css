@@ -437,10 +437,25 @@ hr { border: none; border-top: 1px solid var(--ui); margin: 2rem 0; }
   color: var(--red);
 }
 
-/* ── Tipografia da prosa (headings temáticos — espelha o tema Obsidian) */
+/* ── Tipografia da prosa (espelha o tema Obsidian) ──────────────── */
 .prose h2 { color: var(--green); }
 .prose h3 { color: var(--yellow); }
 .prose h4 { color: var(--blue); }
+
+.prose ul,
+.prose ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+
+.prose li { margin-bottom: 0.35rem; }
+.prose li > p { margin-bottom: 0.35rem; }
+
+.prose ul li::marker { color: var(--green); }
+.prose ol li::marker { color: var(--yellow); font-variant-numeric: tabular-nums; }
+
+.prose blockquote { border-left-color: var(--yellow); }
+
+.prose code { color: var(--cyan); }
+
+.prose strong { color: var(--orange); font-weight: 600; }
 .post-header .meta {
   font-family: system-ui, sans-serif;
   font-size: 0.8rem;
