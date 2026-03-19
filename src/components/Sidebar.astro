@@ -17,11 +17,10 @@ const isActive = (path: string) =>
 
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-content">
-    <a href="/" class="sidebar-identity">
-      <img src="/icon.png" alt="ânfora" width="48" height="48" />
-      <span class="sidebar-firstname">Nicholas</span>
-      <span class="sidebar-lastname">Velten</span>
+    <a href="/" class="sidebar-logo">
+      <img src="/icon.png" alt="ânfora" width="40" height="40" />
     </a>
+    <a href="/" class="sidebar-name">Nicholas Velten</a>
 
     <nav>
       <a href="/escrita" class:list={[{ active: isActive('/escrita') || isActive('/posts') }]}>Escrita</a>
