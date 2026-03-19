@@ -154,6 +154,20 @@ body {
 
 .sidebar-name:hover { color: var(--accent); }
 
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.sidebar-logo img {
+  display: block;
+  opacity: 0.9;
+  transition: opacity 0.15s;
+}
+
+.sidebar-logo:hover img { opacity: 1; }
+
 .sidebar nav {
   display: flex;
   flex-direction: column;
@@ -540,24 +554,29 @@ hr { border: none; border-top: 1px solid var(--ui); margin: 2rem 0; }
   .mobile-menu-btn {
     display: flex;
     position: fixed;
-    top: 0.875rem;
-    left: 1rem;
+    top: 0.75rem;
+    left: 0.75rem;
     z-index: 30;
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    background: var(--bg);
-    border: 1px solid var(--ui);
-    color: var(--tx-2);
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    transition: border-color 0.15s, color 0.15s;
+    padding: 0;
+    transition: opacity 0.15s;
   }
 
-  .mobile-menu-btn:hover {
-    border-color: var(--ui-3);
-    color: var(--tx);
+  .mobile-menu-btn img {
+    display: block;
+    opacity: 0.85;
+    transition: opacity 0.15s;
+  }
+
+  .mobile-menu-btn:hover img {
+    opacity: 1;
   }
 
   .main {
