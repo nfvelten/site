@@ -1,0 +1,84 @@
+import { defineConfig } from 'aeo.js';
+
+export default defineConfig({
+  title: 'Nicholas Velten',
+  description: 'Site pessoal de Nicholas Velten — engenheiro de software full-stack com 4 anos de experiência em Java, TypeScript, Vue.js e Node.js.',
+  url: 'https://nicholas-velten.xyz',
+
+  generators: {
+    robotsTxt: true,
+    llmsTxt: true,
+    sitemap: true,
+  },
+
+  schema: {
+    organization: {
+      name: 'Nicholas Velten',
+      logo: 'https://nicholas-velten.xyz/favicon.svg',
+    },
+    person: {
+      name: 'Nicholas Velten',
+      jobTitle: 'Engenheiro de Software Full-Stack',
+    },
+  },
+
+  pages: [
+    {
+      title: 'Nicholas Velten — Engenheiro de Software Full-Stack',
+      content: `Nicholas Velten é engenheiro de software full-stack com 4 anos de experiência profissional
+em construção de sistemas escaláveis e bem estruturados. Trabalha atualmente na Alloha Fibra,
+onde desenvolve aplicações e serviços em Java, TypeScript, Vue.js e Node.js. Passou por
+4 empresas: GetHash (fintech), Kinebot (startup), LIGUE e Alloha Fibra (telecomunicações).
+
+Stack principal:
+- Back-end: Java, Spring Boot, Node.js, TypeScript, Nest.js
+- Front-end: Vue.js, Nuxt.js, React.js, Next.js, Tailwind CSS
+- Infraestrutura: Docker, Kubernetes, Linux, AWS, GCP, OCI
+- Banco de dados: SQL (PostgreSQL, MySQL)
+- Práticas: Clean Architecture, SOLID, TDD, DDD, SCRUM
+
+Formação em Análise e Desenvolvimento de Sistemas (2018-2021). Inglês fluente.
+Mora em Maringá, Paraná, Brasil. Contato: nikvelten@gmail.com`,
+    },
+    {
+      title: 'Escrita — Nicholas Velten',
+      content: `Textos de Nicholas Velten sobre tecnologia, ferramentas de desenvolvimento e aprendizados
+do dia a dia como engenheiro de software. Reflexões sobre arquitetura, ferramentas de linha
+de comando, editores, sistemas pessoais de conhecimento e desenvolvimento profissional.
+Sem pauta fixa — só o que vale registrar e reler depois.`,
+    },
+    {
+      title: 'Leituras — Nicholas Velten',
+      content: `Registro de leituras de Nicholas Velten — livros lidos, em andamento e na lista de espera.
+Cobre ficção científica, histórias em quadrinhos (HQs), livros técnicos e não-ficção.
+Cada entrada inclui data, status de leitura e resenha quando disponível.
+Frequenta sebos regularmente em busca de novos títulos.`,
+    },
+    {
+      title: 'Currículo — Nicholas Velten',
+      content: `Trajetória profissional de Nicholas Velten, engenheiro de software full-stack.
+
+Experiência (4 anos, 4 empresas):
+- Alloha Fibra (jul. 2023 – presente): Full-stack engineer, Java, TypeScript, Vue.js
+- LIGUE, adquirida pela Alloha (mai. 2022 – jul. 2023): Node.js, React, SQL
+- Kinebot (fev. 2022 – mai. 2022): Node.js, React, AWS Lambda, S3, RDS
+- GetHash (out. 2021 – fev. 2022): Node.js, TypeScript, Docker, Kubernetes
+
+Formação: Tecnólogo em Análise e Desenvolvimento de Sistemas, Centro Universitário Integrado (2018-2021).
+Idiomas: Português (nativo), Inglês (fluente).
+Certificações: DDD, TestJS Summit 2023, Observabilidade.`,
+    },
+    {
+      title: 'mateCreations — Nicholas Velten',
+      content: `mateCreations é uma família de temas de cores criada por Nicholas Velten, inspirada no
+mate e no tererê. Disponível em múltiplas plataformas:
+- yerba-mate.nvim: colorscheme para Neovim com suporte a Treesitter, LSP e plugins
+- obsidian-yerba-mate: tema para Obsidian com variante dark (Yerba Mate) e light (Tererê)
+- vscode-yerba-mate: extensão para Visual Studio Code
+- omarchy-yerba-mate e omarchy-terere: temas de sistema para Omarchy (desktop Linux)
+- Yerba Mate e Tererê para Zen Browser
+
+O tema dark usa fundo verde-oliva escuro (#1c1e13). O tema light usa papel manteiga (#fbf1c7).`,
+    },
+  ],
+});
