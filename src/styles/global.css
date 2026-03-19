@@ -157,7 +157,6 @@ body {
 .sidebar-logo {
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 .sidebar-logo img {
