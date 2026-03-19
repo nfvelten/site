@@ -432,7 +432,14 @@ hr { border: none; border-top: 1px solid var(--ui); margin: 2rem 0; }
 
 /* ── Cabeçalho do post ───────────────────────────────────────────── */
 .post-header { margin-bottom: 2.5rem; }
-.post-header h1 { margin-bottom: 0.5rem; }
+.post-header h1 {
+  margin-bottom: 0.5rem;
+  color: var(--yellow);
+}
+
+/* ── Tipografia da prosa (headings temáticos) ────────────────────── */
+.prose h2 { color: var(--green); }
+.prose h3 { color: var(--cyan); }
 .post-header .meta {
   font-family: system-ui, sans-serif;
   font-size: 0.8rem;
