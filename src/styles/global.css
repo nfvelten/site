@@ -94,8 +94,9 @@ body {
 .sidebar-content {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2rem;
-  padding-right: 1.5rem;
+  padding: 0 1.5rem;
   height: 100%;
   overflow: hidden;
   transition: opacity 0.2s ease, visibility 0.2s ease;
@@ -171,6 +172,7 @@ body {
 .sidebar nav {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.25rem;
 }
 
@@ -269,47 +271,6 @@ body {
 }
 
 .rss-wrap:hover .rss-tooltip { opacity: 1; transform: translateY(0); }
-
-/* ── Email subscribe inline ──────────────────────────────────────── */
-.subscribe-inline {
-  display: flex;
-  gap: 0;
-}
-
-.subscribe-inline-input {
-  font-family: system-ui, sans-serif;
-  font-size: 0.75rem;
-  color: var(--tx);
-  background: none;
-  border: 1px solid var(--ui);
-  border-right: none;
-  border-radius: 4px 0 0 4px;
-  padding: 0.3rem 0.5rem;
-  outline: none;
-  width: 100%;
-  transition: border-color 0.15s;
-}
-
-.subscribe-inline-input::placeholder { color: var(--tx-3); }
-.subscribe-inline-input:focus { border-color: var(--ui-3); }
-
-.subscribe-inline-btn {
-  font-family: system-ui, sans-serif;
-  font-size: 0.78rem;
-  color: var(--tx-3);
-  background: none;
-  border: 1px solid var(--ui);
-  border-radius: 0 4px 4px 0;
-  padding: 0.3rem 0.55rem;
-  cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.subscribe-inline-btn:hover { color: var(--orange); border-color: var(--orange); }
-.subscribe-inline-input:focus + .subscribe-inline-btn,
-.subscribe-inline:focus-within .subscribe-inline-btn { border-color: var(--ui-3); }
 
 /* ── Conteúdo principal ──────────────────────────────────────────── */
 .main {
@@ -547,7 +508,7 @@ hr { border: none; border-top: 1px solid var(--ui); margin: 2rem 0; }
 
   .sidebar-content {
     flex-direction: column;
-    padding-right: 1.5rem;
+    padding: 0 1.5rem;
     gap: 2rem;
     opacity: 1 !important;
     visibility: visible !important;

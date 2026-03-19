@@ -1,7 +1,4 @@
 ---
-// Para ativar o email subscribe, crie uma conta no Buttondown (buttondown.email)
-// e substitua 'seu-usuario' pelo seu username.
-const BUTTONDOWN_USERNAME = 'seu-usuario';
 const RSS_URL = `${Astro.site ?? 'https://amphora-site.vercel.app'}rss.xml`;
 
 const currentPath = Astro.url.pathname;
@@ -42,21 +39,6 @@ const isActive = (path: string) =>
         <div class="rss-tooltip">Copiar link do feed</div>
       </div>
 
-      <form
-        class="subscribe-inline"
-        action={`https://buttondown.email/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`}
-        method="post"
-        target="_blank"
-      >
-        <input
-          class="subscribe-inline-input"
-          type="email"
-          name="email"
-          placeholder="email"
-          required
-        />
-        <button class="subscribe-inline-btn" type="submit">→</button>
-      </form>
     </div>
   </div>
 
