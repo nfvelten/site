@@ -24,7 +24,7 @@ const statusLabel: Record<string, string> = {
 
   {lendo.length > 0 && (
     <section style="margin-bottom: 2.5rem">
-      <h2 style="margin-bottom: 1.25rem">Lendo agora</h2>
+      <h2 class="section-heading">Lendo agora</h2>
       <ul class="post-list">
         {lendo.map(l => (
           <li class="post-item">
@@ -42,7 +42,7 @@ const statusLabel: Record<string, string> = {
 
   {lidos.length > 0 && (
     <section style="margin-bottom: 2.5rem">
-      <h2 style="margin-bottom: 1.25rem">Lidos</h2>
+      <h2 class="section-heading">Lidos</h2>
       <ul class="post-list">
         {lidos.map(l => (
           <li class="post-item">
@@ -62,7 +62,7 @@ const statusLabel: Record<string, string> = {
 
   {querLer.length > 0 && (
     <section>
-      <h2 style="margin-bottom: 1.25rem">Quero ler</h2>
+      <h2 class="section-heading">Quero ler</h2>
       <ul class="post-list">
         {querLer.map(l => (
           <li class="post-item">
