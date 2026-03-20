@@ -94,10 +94,18 @@ body {
 .sidebar-content {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2rem;
   height: 100%;
   overflow: hidden;
   transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.sidebar-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: fit-content;
 }
 
 .sidebar.collapsed {
@@ -150,7 +158,6 @@ body {
   color: var(--tx);
   text-decoration: none;
   white-space: nowrap;
-  padding: 0 1rem;
 }
 
 .sidebar-name:hover { color: var(--accent); }
@@ -158,8 +165,6 @@ body {
 .sidebar-logo {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
 }
 
 .sidebar-logo img {
@@ -174,7 +179,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding: 0 1rem;
 }
 
 .sidebar nav a {
@@ -225,7 +229,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 0 1rem;
 }
 
 .rss-wrap {

@@ -17,16 +17,17 @@ const isActive = (path: string) =>
     <a href="/" class="sidebar-logo">
       <img src="/icon.png" alt="ânfora" width="40" height="40" />
     </a>
-    <a href="/" class="sidebar-name">Nicholas Velten</a>
 
-    <nav>
-      <a href="/escrita" class:list={[{ active: isActive('/escrita') || isActive('/posts') }]}>Escrita</a>
-      <a href="/leituras" class:list={[{ active: isActive('/leituras') }]}>Leituras</a>
-      <a href="/matecreations" class:list={[{ active: isActive('/matecreations') }]}>mateCreations</a>
-    </nav>
+    <div class="sidebar-text">
+      <a href="/" class="sidebar-name">Nicholas Velten</a>
+      <nav>
+        <a href="/escrita" class:list={[{ active: isActive('/escrita') || isActive('/posts') }]}>Escrita</a>
+        <a href="/leituras" class:list={[{ active: isActive('/leituras') }]}>Leituras</a>
+        <a href="/matecreations" class:list={[{ active: isActive('/matecreations') }]}>mateCreations</a>
+      </nav>
+    </div>
 
-
-<div class="sidebar-footer">
+    <div class="sidebar-footer">
       <div class="rss-wrap">
         <button class="rss-btn" id="rss-copy" data-url={RSS_URL}>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
@@ -38,7 +39,6 @@ const isActive = (path: string) =>
         </button>
         <div class="rss-tooltip">Copiar link do feed</div>
       </div>
-
     </div>
   </div>
 
