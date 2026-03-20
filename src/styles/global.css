@@ -94,8 +94,8 @@ body {
 .sidebar-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 2rem;
+  padding: 0 1.5rem;
   height: 100%;
   overflow: hidden;
   transition: opacity 0.2s ease, visibility 0.2s ease;
@@ -105,7 +105,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width: fit-content;
 }
 
 .sidebar.collapsed {
@@ -165,6 +164,8 @@ body {
 .sidebar-logo {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .sidebar-logo img {
@@ -228,6 +229,7 @@ body {
   margin-top: auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.75rem;
 }
 
