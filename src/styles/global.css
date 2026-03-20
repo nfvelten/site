@@ -68,7 +68,6 @@ body {
   display: flex;
   min-height: 100vh;
   margin: 0;
-  padding-left: 1.5rem;
   padding-right: 180px; /* mirrors sidebar width for symmetric centering */
   transition: padding-right 0.3s ease;
 }
