@@ -172,7 +172,7 @@
         "MCP",
         "Security"
       ],
-      "url": "https://github.com/arbitusgateway/arbitus",
+      "url": "https://github.com/harbefas/arbitus",
       "description": "Security proxy between AI agents and MCP servers. Per-agent auth, tool allow and denylists, request schema validation, payload filtering, rate limiting, human-in-the-loop approval and audit logging.",
       "descriptionPt": "Proxy de seguranca entre agentes de IA e servidores MCP. Autenticacao por agente, allow/denylist de tools, validacao de schema, filtragem de payload, rate limiting, aprovacao humana e auditoria."
     },
@@ -222,7 +222,7 @@
       "description": "Open-source proxy that enforces per-agent policies before any tool call reaches an MCP server: auth, allow and denylists, schema validation, payload filtering, rate limiting, HITL and audit.",
       "descriptionPt": "Proxy open-source que aplica politicas por agente antes que qualquer tool call chegue ao servidor MCP: autenticacao, allow/denylist, validacao de schema, filtragem de payload, rate limiting, HITL e auditoria.",
       "href": "/arbitus",
-      "github": "https://github.com/arbitusgateway/arbitus",
+      "github": "https://github.com/harbefas/arbitus",
       "logo": "/arbitus-logo.png",
       "tags": [
         "Rust",
@@ -252,7 +252,7 @@
       "description": "Design system with DTCG tokens compiled through Style Dictionary, component wrappers over native elements, contrast checks and CSS variable drift checks. Five consumers in production.",
       "descriptionPt": "Design system com tokens DTCG compilados via Style Dictionary, wrappers de componentes sobre elementos nativos, checks de contraste e verificacao de drift de variaveis CSS. Cinco consumidores em producao.",
       "href": "/matecreations",
-      "github": "https://github.com/mateCreations",
+      "github": "https://github.com/harbefas",
       "logo": "/mate-logo.png",
       "tags": [
         "Design System",
@@ -433,6 +433,259 @@
       "title": "JDBC migration",
       "href": "/posts/jdbc-migration",
       "summary": "Engineering write-up from production migration work."
+    }
+  ],
+  "contributions": [
+    {
+      "project": "rclone",
+      "repo": "rclone/rclone",
+      "owner": "rclone",
+      "category": "Cloud storage CLI",
+      "categoryPt": "CLI de storage em nuvem",
+      "stars": 59661,
+      "tags": [
+        "Go"
+      ],
+      "prs": [
+        {
+          "pr": 9863,
+          "href": "https://github.com/rclone/rclone/pull/9863",
+          "description": "touch --timestamp parses the documented layouts explicitly instead of guessing from input length, adding the dotted, date-only and RFC3339 forms.",
+          "descriptionPt": "touch --timestamp passa a parsear os layouts documentados explicitamente em vez de adivinhar pelo tamanho da entrada, incluindo as formas pontuada, data pura e RFC3339."
+        }
+      ]
+    },
+    {
+      "project": "lnav",
+      "repo": "tstack/lnav",
+      "owner": "tstack",
+      "category": "Log file navigator",
+      "categoryPt": "Navegador de arquivos de log",
+      "stars": 10643,
+      "tags": [
+        "C++"
+      ],
+      "prs": [
+        {
+          "pr": 1746,
+          "href": "https://github.com/tstack/lnav/pull/1746",
+          "description": "Restores the second G/End press jumping back to the top, which only ever worked in non-selectable views.",
+          "descriptionPt": "Restaura o segundo G/End voltando ao topo, que so funcionava em views nao selecionaveis."
+        }
+      ]
+    },
+    {
+      "project": "Transmission",
+      "repo": "transmission/transmission",
+      "owner": "transmission",
+      "category": "BitTorrent client",
+      "categoryPt": "Cliente BitTorrent",
+      "stars": 15160,
+      "tags": [
+        "C++"
+      ],
+      "prs": [
+        {
+          "pr": 9096,
+          "href": "https://github.com/transmission/transmission/pull/9096",
+          "description": "Collapsed is_martian_addr() into is_valid_for_peers(), backed by a characterization test.",
+          "descriptionPt": "Colapsou is_martian_addr() em is_valid_for_peers(), com teste de caracterizacao."
+        }
+      ]
+    },
+    {
+      "project": "Cataclysm: Bright Nights",
+      "repo": "cataclysmbn/Cataclysm-BN",
+      "owner": "cataclysmbn",
+      "category": "Game",
+      "categoryPt": "Jogo",
+      "stars": 1209,
+      "tags": [
+        "C++"
+      ],
+      "prs": [
+        {
+          "pr": 10172,
+          "href": "https://github.com/cataclysmbn/Cataclysm-BN/pull/10172",
+          "description": "Three merged commits fixing reload, unload, and deactivation logic for charge-untracked monster ammo/hacks, validated with regression tests and manual save/load scenarios.",
+          "descriptionPt": "Tres commits corrigindo recarga, descarregamento e desativacao de municao de monstros nao contada por charges, validado com testes de regressao e cenarios manuais de save/load."
+        }
+      ]
+    },
+    {
+      "project": "rdrview",
+      "repo": "eafer/rdrview",
+      "owner": "eafer",
+      "category": "Firefox Reader View as a CLI",
+      "categoryPt": "Firefox Reader View via CLI",
+      "stars": 939,
+      "tags": [
+        "C"
+      ],
+      "prs": [
+        {
+          "pr": 50,
+          "href": "https://github.com/eafer/rdrview/pull/50",
+          "description": "Version guard for CURLOPT_PROTOCOLS_STR.",
+          "descriptionPt": "Guard de versao para CURLOPT_PROTOCOLS_STR."
+        }
+      ]
+    },
+    {
+      "project": "TorrServer",
+      "repo": "YouROK/TorrServer",
+      "owner": "YouROK",
+      "category": "Torrent streaming server",
+      "categoryPt": "Servidor de streaming de torrent",
+      "stars": 3008,
+      "tags": [
+        "Go"
+      ],
+      "prs": [
+        {
+          "pr": 848,
+          "href": "https://github.com/YouROK/TorrServer/pull/848",
+          "description": "Returns a JSON error body when /torrents rejects a request.",
+          "descriptionPt": "Retorna corpo JSON quando /torrents rejeita uma requisicao."
+        }
+      ]
+    },
+    {
+      "project": "usage",
+      "repo": "jdx/usage",
+      "owner": "jdx",
+      "category": "CLI spec, used by mise",
+      "categoryPt": "Spec de CLI, usado pelo mise",
+      "stars": 1008,
+      "tags": [
+        "Rust"
+      ],
+      "prs": [
+        {
+          "pr": 1349,
+          "href": "https://github.com/jdx/usage/pull/1349",
+          "description": "Fixes completion of values in --flag=value style flags.",
+          "descriptionPt": "Corrige completion de valores em flags no formato --flag=value."
+        }
+      ]
+    },
+    {
+      "project": "cliamp",
+      "repo": "bjarneo/cliamp",
+      "owner": "bjarneo",
+      "category": "Terminal music player",
+      "categoryPt": "Player de música no terminal",
+      "stars": 4005,
+      "tags": [
+        "Rust"
+      ],
+      "prs": [
+        {
+          "pr": 404,
+          "href": "https://github.com/bjarneo/cliamp/pull/404",
+          "description": "Adds the option to hide the keybinding hints bar.",
+          "descriptionPt": "Permite esconder a barra de dicas de atalhos."
+        }
+      ]
+    },
+    {
+      "project": "Shelfmark",
+      "repo": "calibrain/shelfmark",
+      "owner": "calibrain",
+      "category": "Ebook search & download tool",
+      "categoryPt": "Busca e download de ebooks",
+      "stars": 3841,
+      "tags": [
+        "Python"
+      ],
+      "prs": [
+        {
+          "pr": 1290,
+          "href": "https://github.com/calibrain/shelfmark/pull/1290",
+          "description": "Limits search_author's credit list to the first name.",
+          "descriptionPt": "Limita a lista de creditos de search_author ao primeiro nome."
+        },
+        {
+          "pr": 1311,
+          "href": "https://github.com/calibrain/shelfmark/pull/1311",
+          "description": "Puts Search By mode, content type and query in the URL hash, so a search can be shared or bookmarked.",
+          "descriptionPt": "Coloca modo de busca, tipo de conteudo e query no hash da URL, permitindo compartilhar ou favoritar uma busca."
+        }
+      ]
+    },
+    {
+      "project": "tuicr",
+      "repo": "agavra/tuicr",
+      "owner": "agavra",
+      "category": "Code review TUI",
+      "categoryPt": "TUI de code review",
+      "stars": 3029,
+      "tags": [
+        "Rust"
+      ],
+      "prs": [
+        {
+          "pr": 667,
+          "href": "https://github.com/agavra/tuicr/pull/667",
+          "description": "Fixes help alignment in Comment mode.",
+          "descriptionPt": "Corrige alinhamento do help no Comment mode."
+        },
+        {
+          "pr": 673,
+          "href": "https://github.com/agavra/tuicr/pull/673",
+          "description": "Horizontal scroll (h/l) in the help popup.",
+          "descriptionPt": "Scroll horizontal (h/l) no popup de help."
+        },
+        {
+          "pr": 676,
+          "href": "https://github.com/agavra/tuicr/pull/676",
+          "description": "Adds export.session_header so the session slug can be dropped from exports, defaulting to the existing output.",
+          "descriptionPt": "Adiciona export.session_header para remover o slug de sessao dos exports, mantendo a saida atual como padrao."
+        },
+        {
+          "pr": 688,
+          "href": "https://github.com/agavra/tuicr/pull/688",
+          "description": "Adds the q_quits option so a bare q quits in the main modes when enabled.",
+          "descriptionPt": "Adiciona a opcao q_quits para que um q sozinho encerre nos modos principais quando habilitado."
+        }
+      ]
+    },
+    {
+      "project": "retransmission",
+      "repo": "retransmission/retransmission",
+      "owner": "retransmission",
+      "category": "Transmission fork",
+      "categoryPt": "Fork do Transmission",
+      "tags": [
+        "C++"
+      ],
+      "prs": [
+        {
+          "pr": 295,
+          "href": "https://github.com/retransmission/retransmission/pull/295",
+          "description": "Cherry-pick of Transmission PR #9096, opened and merged by the maintainer.",
+          "descriptionPt": "Cherry-pick da PR #9096 do Transmission, aberta e mergeada pelo mantenedor."
+        }
+      ]
+    },
+    {
+      "project": "Corosolto",
+      "repo": "corosolto/client",
+      "owner": "corosolto",
+      "category": "Browser FPS game",
+      "categoryPt": "FPS de navegador",
+      "stars": 243,
+      "tags": [
+        "JavaScript"
+      ],
+      "prs": [
+        {
+          "pr": 500,
+          "href": "https://github.com/corosolto/client/pull/500",
+          "description": "Replaces the phantom local issues-bot action in CI with the real steps. Opened as #490, reopened and merged by the maintainer as #500.",
+          "descriptionPt": "Substitui a action local fantasma do issues-bot no CI pelos passos reais. Aberta como #490, reaberta e mergeada pelo mantenedor como #500."
+        }
+      ]
     }
   ]
 }

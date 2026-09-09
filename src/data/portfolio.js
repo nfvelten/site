@@ -266,6 +266,40 @@ export const portfolio = {
   ],
   contributions: [
     {
+      project: 'rclone',
+      repo: 'rclone/rclone',
+      owner: 'rclone',
+      category: 'Cloud storage CLI',
+      categoryPt: 'CLI de storage em nuvem',
+      stars: 59661,
+      tags: ['Go'],
+      prs: [
+        {
+          pr: 9863,
+          href: 'https://github.com/rclone/rclone/pull/9863',
+          description: 'touch --timestamp parses the documented layouts explicitly instead of guessing from input length, adding the dotted, date-only and RFC3339 forms.',
+          descriptionPt: 'touch --timestamp passa a parsear os layouts documentados explicitamente em vez de adivinhar pelo tamanho da entrada, incluindo as formas pontuada, data pura e RFC3339.',
+        },
+      ],
+    },
+    {
+      project: 'lnav',
+      repo: 'tstack/lnav',
+      owner: 'tstack',
+      category: 'Log file navigator',
+      categoryPt: 'Navegador de arquivos de log',
+      stars: 10643,
+      tags: ['C++'],
+      prs: [
+        {
+          pr: 1746,
+          href: 'https://github.com/tstack/lnav/pull/1746',
+          description: 'Restores the second G/End press jumping back to the top, which only ever worked in non-selectable views.',
+          descriptionPt: 'Restaura o segundo G/End voltando ao topo, que so funcionava em views nao selecionaveis.',
+        },
+      ],
+    },
+    {
       project: 'Transmission',
       repo: 'transmission/transmission',
       owner: 'transmission',
@@ -382,6 +416,12 @@ export const portfolio = {
           description: "Limits search_author's credit list to the first name.",
           descriptionPt: "Limita a lista de creditos de search_author ao primeiro nome.",
         },
+        {
+          pr: 1311,
+          href: 'https://github.com/calibrain/shelfmark/pull/1311',
+          description: 'Puts Search By mode, content type and query in the URL hash, so a search can be shared or bookmarked.',
+          descriptionPt: 'Coloca modo de busca, tipo de conteudo e query no hash da URL, permitindo compartilhar ou favoritar uma busca.',
+        },
       ],
     },
     {
@@ -405,6 +445,18 @@ export const portfolio = {
           description: 'Horizontal scroll (h/l) in the help popup.',
           descriptionPt: 'Scroll horizontal (h/l) no popup de help.',
         },
+        {
+          pr: 676,
+          href: 'https://github.com/agavra/tuicr/pull/676',
+          description: 'Adds export.session_header so the session slug can be dropped from exports, defaulting to the existing output.',
+          descriptionPt: 'Adiciona export.session_header para remover o slug de sessao dos exports, mantendo a saida atual como padrao.',
+        },
+        {
+          pr: 688,
+          href: 'https://github.com/agavra/tuicr/pull/688',
+          description: 'Adds the q_quits option so a bare q quits in the main modes when enabled.',
+          descriptionPt: 'Adiciona a opcao q_quits para que um q sozinho encerre nos modos principais quando habilitado.',
+        },
       ],
     },
     {
@@ -420,6 +472,23 @@ export const portfolio = {
           href: 'https://github.com/retransmission/retransmission/pull/295',
           description: 'Cherry-pick of Transmission PR #9096, opened and merged by the maintainer.',
           descriptionPt: 'Cherry-pick da PR #9096 do Transmission, aberta e mergeada pelo mantenedor.',
+        },
+      ],
+    },
+    {
+      project: 'Corosolto',
+      repo: 'corosolto/client',
+      owner: 'corosolto',
+      category: 'Browser FPS game',
+      categoryPt: 'FPS de navegador',
+      stars: 243,
+      tags: ['JavaScript'],
+      prs: [
+        {
+          pr: 500,
+          href: 'https://github.com/corosolto/client/pull/500',
+          description: 'Replaces the phantom local issues-bot action in CI with the real steps. Opened as #490, reopened and merged by the maintainer as #500.',
+          descriptionPt: 'Substitui a action local fantasma do issues-bot no CI pelos passos reais. Aberta como #490, reaberta e mergeada pelo mantenedor como #500.',
         },
       ],
     },
