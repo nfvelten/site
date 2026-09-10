@@ -437,6 +437,25 @@
   ],
   "contributions": [
     {
+      "project": "lichess",
+      "repo": "lichess-org/lila",
+      "owner": "lichess-org",
+      "category": "Chess server behind lichess.org",
+      "categoryPt": "Servidor de xadrez do lichess.org",
+      "stars": 18714,
+      "tags": [
+        "Scala"
+      ],
+      "prs": [
+        {
+          "pr": 21563,
+          "href": "https://github.com/lichess-org/lila/pull/21563",
+          "description": "Study comments keep their authors through a PGN export and import, so comments from different people on the same move no longer merge into one.",
+          "descriptionPt": "Comentarios de study mantem o autor no export e import de PGN, e comentarios de pessoas diferentes no mesmo lance deixam de se fundir num so."
+        }
+      ]
+    },
+    {
       "project": "rclone",
       "repo": "rclone/rclone",
       "owner": "rclone",
