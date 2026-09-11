@@ -348,6 +348,12 @@ export const portfolio = {
           description: 'Three merged commits fixing reload, unload, and deactivation logic for charge-untracked monster ammo/hacks, validated with regression tests and manual save/load scenarios.',
           descriptionPt: 'Tres commits corrigindo recarga, descarregamento e desativacao de municao de monstros nao contada por charges, validado com testes de regressao e cenarios manuais de save/load.',
         },
+        {
+          pr: 10207,
+          href: 'https://github.com/cataclysmbn/Cataclysm-BN/pull/10207',
+          description: 'Fixes double-counted elapsed time during activity skips, so hunger, thirst, fatigue, vitamin use and skill rust follow calendar time when TIME_ACTION_SCALE changes.',
+          descriptionPt: 'Corrige a contagem duplicada de tempo durante activity skips, para que fome, sede, fadiga, consumo de vitaminas e perda de habilidades acompanhem o tempo de calendário ao alterar TIME_ACTION_SCALE.',
+        },
       ],
     },
     {
@@ -438,6 +444,12 @@ export const portfolio = {
           href: 'https://github.com/calibrain/shelfmark/pull/1311',
           description: 'Puts Search By mode, content type and query in the URL hash, so a search can be shared or bookmarked.',
           descriptionPt: 'Coloca modo de busca, tipo de conteudo e query no hash da URL, permitindo compartilhar ou favoritar uma busca.',
+        },
+        {
+          pr: 1314,
+          href: 'https://github.com/calibrain/shelfmark/pull/1314',
+          description: 'Omits default filters from search URLs and prevents late configuration loads from overwriting the filters in a shared link.',
+          descriptionPt: 'Omite filtros padrão das URLs de busca e impede que o carregamento tardio da configuração sobrescreva os filtros de um link compartilhado.',
         },
       ],
     },
