@@ -1,0 +1,198 @@
+---
+title: "The crash was in BPF, the bug was in JFS: my first month of kernel patches"
+title_pt: "O crash era no BPF, o bug era no JFS: meu primeiro mês de patches no kernel"
+date: 2026-11-10
+description: Five syzbot bugs, five patches on the mailing list, one applied. What I learned going from backend work to the Linux kernel, including the review that taught me the most and the bug I never managed to reproduce.
+description_pt: Cinco bugs do syzbot, cinco patches na lista, um aplicado. O que aprendi saindo do backend pro kernel Linux, incluindo a review que mais me ensinou e o bug que nunca consegui reproduzir.
+tags: [technology, notes]
+draft: false
+---
+
+import En from '../../components/En.astro';
+import Pt from '../../components/Pt.astro';
+
+<En>
+
+My day job is backend: Java services, databases, the occasional production fire at an ISP. I had read about the kernel for years without ever sending anything to it. In October I decided to stop reading and send something, and the first two places I tried were dead ends.
+
+The usual advice for a first patch is staging cleanups. I picked `rtl8723bs`, which turned out to be on its way out of the tree, and then the `sysfs_emit` conversions in greybus, which had already been done many times over by other people taking the same advice. Neither patch would have taught me anything or helped anyone. So I went where the bugs are real: [syzbot](https://syzkaller.appspot.com/), the fuzzer that finds actual crashes in mainline and linux-next and posts them, with reproducers, for anyone to pick up.
+
+---
+
+## Finding a bug nobody is already fixing
+
+Most syzbot crashes are claimed. Someone has a patch on the list, or a maintainer replied with "I'll look at it." The syzbot dashboard has a discussions column, but it misses a lot, because patches don't always reference the report. The check that worked for me was searching [lore](https://lore.kernel.org/) twice, once by the report's extid and once by the names of the functions in the stack trace. If both came back empty, the bug was probably free.
+
+The second rule I settled on was to reproduce before claiming anything. A stack trace tells you where the kernel noticed something was wrong, not where it went wrong. Several of the bugs below turned out to have their cause in a different subsystem from the crash.
+
+---
+
+## bpf: a patch that was too careful
+
+The first bug was a KCSAN report, a data race on `bpf_lru_node::type` between `__bpf_lru_list_rotate` and `bpf_lru_push_free`. One path read the field without a lock, inside a `WARN_ON_ONCE`, while another wrote it under a different lock. I wrote a reproducer, 8 threads hammering `BPF_MAP_UPDATE_BATCH` on a 64-entry LRU map, that produced 110 KCSAN reports per run. With `READ_ONCE`/`WRITE_ONCE` annotations it produced zero, and the BPF selftests still passed.
+
+I sent v1 to bpf-next on October 13. Three days later Alexei Starovoitov replied, and the review is the most useful thing I got out of the whole month. In short:
+
+- **A benign race is not a fix.** No `Fixes:` tag, because a `Fixes:` tag means "backport this," and nothing here was broken.
+- **Remove, don't annotate.** One of the unlocked reads was a check that ran again later under the lock. The right change was to delete it, not to wrap it in `READ_ONCE`.
+- **Annotate only writers that can actually race.** I had put `WRITE_ONCE` on every writer. Most of them touched nodes that only one CPU owned at the time, so no lockless reader could ever see them.
+
+v1 was the patch of someone who wanted to look thorough. v2 was smaller and correct, and it was [applied on October 19](https://git.kernel.org/bpf/bpf-next/c/f25f6319e248). The lesson carries over to every patch since: maintainers want the smallest change that is correct, and every extra line is a line they have to verify.
+
+---
+
+## USB gadget: the bisection nobody believed
+
+The second bug was a real crash: `kernel BUG in register_netdevice`, hit through configfs when binding a USB gadget Ethernet function (NCM, ECM, EEM, RNDIS, subset). syzbot had bisected it to the commit that started charging network device allocations to memory cgroups, and on the list that bisection had been met with doubt. Why would memory accounting cause a double registration?
+
+It turned out to be exactly that. The reproducer limits the cgroup's memory, so a later allocation inside `register_netdev()` fails. The device is left in the `NETREG_UNREGISTERED` state, which the gadget code doesn't check for. On the next bind it sees a device that isn't registered, tries to register it again, and hits the `BUG_ON` that requires `NETREG_UNINITIALIZED`. Memory accounting didn't introduce the bug. It made a failure path reachable that had never been exercised.
+
+To prove it I used fault injection: `failslab` with fail-nth, failing the nth allocation on each attempt and walking n upward. Unpatched, NCM, ECM and RNDIS all hit the `BUG` at n=16. With the fix, `gether_register_netdev()` refusing a device that isn't in its initial state, NCM survived 400 iterations and the others 300.
+
+The phonet function had a sibling bug, a use-after-free in `pn_bind`. Another contributor had a patch for it that had stalled, which blamed a race between bind and instance teardown. The KASAN free stack said something else: on registration failure, the code called `free_netdev()` but kept the pointer, and the next bind wrote through it. Fault injection reproduced it at n=15, and dropping the free fixed it.
+
+---
+
+## JFS: the crash was in BPF, the bug was in JFS
+
+This is the one I'm proudest of, because the crash pointed somewhere completely wrong.
+
+The report was a general protection fault in `bpf_inode_storage_free`. BPF inode storage hangs off the inode's `i_security` field, and when the inode was freed, that field held garbage. Nothing in BPF writes garbage there, so something else had overwritten it.
+
+KASAN didn't help. KASAN catches access outside an allocation, and this write landed inside the same object: the JFS inode embeds the VFS inode, so a write that runs past one field of the JFS inode can land in `i_security` without ever leaving the allocation. What found it was a hardware watchpoint. `register_wide_hw_breakpoint()` on the address of `i_security` fires on every write to it, with a stack trace, and the stack trace was in JFS directory code.
+
+The chain was this. A JFS directory's root lives inline in the inode, as a 9-slot array whose slot 0 is a header, plus a sort table (`stbl`) of slot indices. A validation function added in March, `check_dtroot()`, checked those indices but accepted 0. With a crafted image, `add_missing_indices()` then wrote into "slot 0," which is the header, at an offset that overwrote part of the sort table. The next `readdir` followed a now-corrupted index, 11, past the end of the 9-slot root and wrote into the next thing in memory, which was `i_security`. The fix rejects index 0 and checks for duplicates, the same way the equivalent check for non-root pages already does.
+
+A second JFS bug came out of the same corrupted-image territory: a stack segment fault in `release_metapage`. A regular file's extent tree root also lives inline in the inode and should carry a `BT_ROOT` flag. On a corrupted image the flag is 0, `xtTruncate()` trusts it, takes the non-root path and tries to release the inline root as if it were a real page. The fix makes `xt_getpage()` reject any page whose `BT_ROOT` flag doesn't match whether it is actually the root. syzbot's own AI had sent a patch touching this in May, bundled with unrelated changes, and nobody had replied to it.
+
+---
+
+## XFS: the one that didn't work
+
+Not everything worked. The most interesting report I looked at was a use-after-free in XFS's log code, during a filesystem shutdown. Reading history, I found a 2022 fix for a nearly identical bug that had added an early return when a buffer log item still had references. A 2025 refactor had replaced that return with an `ASSERT`, and in XFS an `ASSERT` compiles to nothing unless `CONFIG_XFS_DEBUG` is set. syzbot's config doesn't set it.
+
+It's a good theory, and it might even be right. I ran syzbot's reproducer through about 13,000 forced shutdowns, including runs with an artificial delay in the suspect path, and never got the crash. syzbot itself had only hit it six times, on a PREEMPT_RT kernel with corrupted images. It's also possible the refactor was deliberate and the real fix belongs somewhere else.
+
+So it stays parked. A theory you can't reproduce isn't a patch, and sending "I think this commit broke something" to a maintainer without a reproducer costs their time, not mine. Of everything in this post, it's the part I'd most want a newcomer to read.
+
+---
+
+## Working with an LLM, under the kernel's rules
+
+I used an LLM assistant throughout, and the kernel has written rules for that in `Documentation/process/coding-assistants.rst`. The assistant never adds a `Signed-off-by:`, because that tag is a legal statement, the Developer Certificate of Origin, and only a person can make it. Every patch carries an `Assisted-by:` tag naming the tool, and I signed every one myself.
+
+In practice the assistant was fast at the tedious parts: writing reproducers and fault-injection loops, reading unfamiliar subsystems, and drafting first versions of patches and commit messages. What it didn't do was decide. Which bug to take, whether a reproducer actually proved the cause, what to send and when, and how to answer a maintainer were mine. The Alexei review is a good example: the over-annotated v1 is exactly what you get when "thorough" is the goal, and fixing it took understanding who owns each node, not more output.
+
+Maintainers have good reason to be wary of AI-generated patches with no reproducer and no disclosure. The only answer I know is to bring the reproducer, disclose the tool, and be able to defend every line yourself.
+
+---
+
+## Tooling
+
+- **virtme-ng (`vng`)** boots a freshly built kernel in a VM in seconds, with your working tree mounted. Most of my testing was `vng --run . -- ./repro`.
+- **A KASAN build** took 47 minutes on my laptop. Build once and reuse the output directory across branches.
+- **b4** handles the email workflow: preparing series, tracking versions, sending through the web relay. One gotcha: `b4 prep --edit-cover` failed on a shallow clone, and I had to rebuild the cover commit by hand.
+- **lore** sits behind a bot check that blocks plain `curl`. `b4 mbox <message-id>` fetches a whole thread without a browser.
+
+---
+
+## Where things stand
+
+Five patches sent, one applied. The other four, two USB and two JFS, have been on the list for three to four weeks. The only replies so far are from bots: the BPF CI and an automated reviewer. No human has said yes or no.
+
+That silence is normal, and nobody told me that before I started. Kernel maintainers get far more patches than they have time to review, and a first-time contributor's patch to a quiet subsystem waits. The applied patch taught me how review works. The silent ones are teaching me patience, and the XFS one taught me when not to send anything at all.
+
+</En>
+
+<Pt>
+
+Meu trabalho é backend: serviços Java, bancos de dados, um incêndio em produção de vez em quando num provedor de internet. Eu lia sobre o kernel havia anos sem nunca ter mandado nada. Em outubro decidi parar de ler e mandar alguma coisa, e os dois primeiros lugares que tentei não deram em nada.
+
+O conselho clássico pro primeiro patch é limpeza no staging. Peguei o `rtl8723bs`, que estava de saída da árvore, e depois as conversões pra `sysfs_emit` no greybus, que já tinham sido feitas várias vezes por gente seguindo o mesmo conselho. Nenhum dos dois patches teria me ensinado nada nem ajudado ninguém. Então fui onde os bugs são reais: o [syzbot](https://syzkaller.appspot.com/), o fuzzer que acha crashes de verdade no mainline e no linux-next e publica, com reprodutor, pra quem quiser pegar.
+
+---
+
+## Achar um bug que ninguém já está corrigindo
+
+A maioria dos crashes do syzbot já tem dono. Alguém tem patch na lista, ou um mantenedor respondeu "vou olhar". O painel do syzbot tem uma coluna de discussões, mas ela perde muita coisa, porque os patches nem sempre citam o report. O que funcionou pra mim foi buscar no [lore](https://lore.kernel.org/) duas vezes, uma pelo extid do report e outra pelos nomes das funções do stack trace. Se as duas voltavam vazias, o bug provavelmente estava livre.
+
+A segunda regra que adotei foi reproduzir antes de reivindicar qualquer coisa. Um stack trace diz onde o kernel percebeu que algo estava errado, não onde deu errado. Vários dos bugs abaixo tinham a causa num subsistema diferente do crash.
+
+---
+
+## bpf: um patch cuidadoso demais
+
+O primeiro bug foi um report do KCSAN, uma data race em `bpf_lru_node::type` entre `__bpf_lru_list_rotate` e `bpf_lru_push_free`. Um caminho lia o campo sem lock, dentro de um `WARN_ON_ONCE`, enquanto outro escrevia sob outro lock. Escrevi um reprodutor, 8 threads martelando `BPF_MAP_UPDATE_BATCH` num mapa LRU de 64 entradas, que gerava 110 reports do KCSAN por execução. Com anotações `READ_ONCE`/`WRITE_ONCE` gerava zero, e os selftests de BPF continuavam passando.
+
+Mandei o v1 pro bpf-next em 13 de outubro. Três dias depois o Alexei Starovoitov respondeu, e essa review foi a coisa mais útil que tirei do mês inteiro. Resumindo:
+
+- **Race benigna não é fix.** Nada de tag `Fixes:`, porque `Fixes:` quer dizer "faça backport disso", e nada ali estava quebrado.
+- **Remova em vez de anotar.** Uma das leituras sem lock era uma checagem que rodava de novo depois, sob o lock. O certo era apagar, não embrulhar em `READ_ONCE`.
+- **Anote só quem escreve e pode de fato correr.** Eu tinha posto `WRITE_ONCE` em todos os writers. A maioria mexia em nós que só uma CPU possuía naquele momento, então nenhum leitor sem lock podia vê-los.
+
+O v1 era o patch de quem queria parecer minucioso. O v2 era menor e correto, e foi [aplicado em 19 de outubro](https://git.kernel.org/bpf/bpf-next/c/f25f6319e248). A lição vale pra todos os patches desde então: mantenedor quer a menor mudança correta, e cada linha a mais é uma linha que ele precisa verificar.
+
+---
+
+## USB gadget: a bisseção em que ninguém acreditava
+
+O segundo bug era um crash de verdade: `kernel BUG in register_netdevice`, disparado via configfs ao fazer bind de uma função Ethernet de USB gadget (NCM, ECM, EEM, RNDIS, subset). O syzbot tinha bisseccionado até o commit que passou a contabilizar alocações de dispositivos de rede nos cgroups de memória, e na lista essa bisseção foi recebida com desconfiança. Por que contabilizar memória causaria um registro duplo?
+
+Era exatamente isso. O reprodutor limita a memória do cgroup, então uma alocação mais adiante dentro de `register_netdev()` falha. O dispositivo fica no estado `NETREG_UNREGISTERED`, que o código do gadget não verifica. No bind seguinte ele vê um dispositivo não registrado, tenta registrar de novo e cai no `BUG_ON` que exige `NETREG_UNINITIALIZED`. A contabilização de memória não criou o bug. Ela tornou alcançável um caminho de falha que nunca tinha sido exercitado.
+
+Pra provar usei injeção de falha: `failslab` com fail-nth, fazendo a n-ésima alocação falhar a cada tentativa e subindo o n. Sem patch, NCM, ECM e RNDIS caíam no `BUG` em n=16. Com a correção, `gether_register_netdev()` recusando um dispositivo fora do estado inicial, o NCM aguentou 400 iterações e os outros 300.
+
+A função phonet tinha um bug irmão, um use-after-free em `pn_bind`. Outro contribuidor tinha um patch parado pra ele, que culpava uma corrida entre o bind e a destruição da instância. O stack de free do KASAN dizia outra coisa: quando o registro falhava, o código chamava `free_netdev()` mas guardava o ponteiro, e o bind seguinte escrevia por ele. A injeção de falha reproduziu em n=15, e tirar o free corrigiu.
+
+---
+
+## JFS: o crash era no BPF, o bug era no JFS
+
+Esse é o que mais me orgulha, porque o crash apontava pro lugar completamente errado.
+
+O report era um general protection fault em `bpf_inode_storage_free`. O armazenamento de inode do BPF fica pendurado no campo `i_security` do inode, e quando o inode era liberado, esse campo tinha lixo. Nada no BPF escreve lixo ali, então alguém tinha sobrescrito.
+
+O KASAN não ajudou. Ele pega acesso fora de uma alocação, e essa escrita caía dentro do mesmo objeto: o inode do JFS embute o inode do VFS, então uma escrita que passa do fim de um campo do inode JFS pode cair em `i_security` sem nunca sair da alocação. O que achou foi um watchpoint de hardware. `register_wide_hw_breakpoint()` no endereço de `i_security` dispara a cada escrita, com stack trace, e o stack trace estava no código de diretório do JFS.
+
+A cadeia era esta. A raiz de um diretório JFS vive dentro do inode, como um array de 9 slots cujo slot 0 é um cabeçalho, mais uma tabela de ordenação (`stbl`) com índices de slot. Uma função de validação adicionada em março, `check_dtroot()`, verificava esses índices mas aceitava 0. Com uma imagem forjada, `add_missing_indices()` escrevia no "slot 0", que é o cabeçalho, num offset que sobrescrevia parte da tabela de ordenação. O `readdir` seguinte seguia um índice agora corrompido, 11, além do fim da raiz de 9 slots, e escrevia na próxima coisa da memória, que era `i_security`. A correção rejeita o índice 0 e checa duplicatas, do mesmo jeito que a checagem equivalente pra páginas que não são raiz já fazia.
+
+Um segundo bug do JFS saiu do mesmo território de imagens corrompidas: um stack segment fault em `release_metapage`. A raiz da árvore de extents de um arquivo regular também vive dentro do inode e deveria ter a flag `BT_ROOT`. Numa imagem corrompida a flag vem 0, `xtTruncate()` confia nela, segue o caminho de não-raiz e tenta liberar a raiz inline como se fosse uma página de verdade. A correção faz `xt_getpage()` rejeitar qualquer página cuja flag `BT_ROOT` não bata com ela ser de fato a raiz. A própria IA do syzbot tinha mandado em maio um patch mexendo nisso, junto com mudanças não relacionadas, e ninguém respondeu.
+
+---
+
+## XFS: o que não deu certo
+
+Nem tudo funcionou. O report mais interessante que olhei era um use-after-free no código de log do XFS, durante o shutdown do sistema de arquivos. Lendo o histórico, achei uma correção de 2022 pra um bug quase idêntico, que tinha adicionado um retorno antecipado quando um log item de buffer ainda tinha referências. Um refactor de 2025 trocou esse retorno por um `ASSERT`, e no XFS um `ASSERT` vira nada a menos que `CONFIG_XFS_DEBUG` esteja ligado. A config do syzbot não liga.
+
+É uma boa teoria, e pode até estar certa. Rodei o reprodutor do syzbot por uns 13.000 shutdowns forçados, inclusive com um atraso artificial no caminho suspeito, e o crash nunca veio. O próprio syzbot só bateu nele seis vezes, num kernel PREEMPT_RT com imagens corrompidas. Também é possível que o refactor tenha sido deliberado e a correção certa esteja em outro lugar.
+
+Então ficou estacionado. Teoria que você não reproduz não é patch, e mandar "acho que esse commit quebrou algo" pra um mantenedor sem reprodutor gasta o tempo dele, não o meu. De tudo neste post, é a parte que eu mais queria que alguém começando lesse.
+
+---
+
+## Trabalhando com um LLM, sob as regras do kernel
+
+Usei um assistente LLM o tempo todo, e o kernel tem regras escritas pra isso em `Documentation/process/coding-assistants.rst`. O assistente nunca adiciona `Signed-off-by:`, porque essa tag é uma declaração legal, o Developer Certificate of Origin, e só uma pessoa pode fazê-la. Todo patch leva uma tag `Assisted-by:` com o nome da ferramenta, e eu mesmo assinei cada um.
+
+Na prática o assistente era rápido nas partes tediosas: escrever reprodutores e loops de injeção de falha, ler subsistemas desconhecidos, rascunhar primeiras versões de patches e mensagens de commit. O que ele não fazia era decidir. Qual bug pegar, se um reprodutor de fato provava a causa, o que mandar e quando, e como responder um mantenedor eram comigo. A review do Alexei é um bom exemplo: o v1 anotado demais é exatamente o que sai quando o objetivo é "ser minucioso", e consertar exigiu entender quem é dono de cada nó, não mais output.
+
+Mantenedores têm bons motivos pra desconfiar de patch gerado por IA sem reprodutor e sem aviso. A única resposta que conheço é trazer o reprodutor, declarar a ferramenta e conseguir defender cada linha você mesmo.
+
+---
+
+## Ferramentas
+
+- **virtme-ng (`vng`)** sobe um kernel recém-compilado numa VM em segundos, com a sua árvore montada. A maior parte dos meus testes foi `vng --run . -- ./repro`.
+- **Um build com KASAN** levou 47 minutos no meu notebook. Compile uma vez e reaproveite o diretório de saída entre branches.
+- **b4** cuida do fluxo por e-mail: preparar a série, controlar versões, mandar pelo relay web. Uma pegadinha: `b4 prep --edit-cover` falhou num clone raso, e tive que refazer o commit de capa na mão.
+- **lore** fica atrás de uma checagem anti-bot que bloqueia `curl` puro. `b4 mbox <message-id>` baixa uma thread inteira sem navegador.
+
+---
+
+## Onde as coisas estão
+
+Cinco patches enviados, um aplicado. Os outros quatro, dois de USB e dois de JFS, estão na lista há três a quatro semanas. As únicas respostas até agora são de bots: o CI do BPF e um revisor automático. Nenhuma pessoa disse sim ou não.
+
+Esse silêncio é normal, e ninguém me avisou antes de começar. Mantenedores do kernel recebem muito mais patches do que têm tempo de revisar, e o patch de um contribuidor de primeira viagem num subsistema calmo espera. O patch aplicado me ensinou como a review funciona. Os silenciosos estão me ensinando paciência, e o do XFS me ensinou quando não mandar nada.
+
+</Pt>
